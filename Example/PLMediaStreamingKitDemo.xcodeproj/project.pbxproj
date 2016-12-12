@@ -20,7 +20,6 @@
 		08DEEE871DC9FBC300CFB6AA /* PrincessCrown.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE7A1DC9FBC300CFB6AA /* PrincessCrown.bundle */; };
 		08DEEE881DC9FBC300CFB6AA /* tiara.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE7B1DC9FBC300CFB6AA /* tiara.bundle */; };
 		08DEEE891DC9FBC300CFB6AA /* YellowEar.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE7C1DC9FBC300CFB6AA /* YellowEar.bundle */; };
-		08DF05661DFBD0C600F5FF42 /* v3.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DF05651DFBD0C600F5FF42 /* v3.bundle */; };
 		52BE1E79748BA53D433159B1 /* libPods-PLMediaStreamingKitDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8A06DB17A42B6A6EC21E6AF /* libPods-PLMediaStreamingKitDemo.a */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -34,6 +33,7 @@
 		ADB2860E1DA1ED7E00436929 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ADB2860C1DA1ED7E00436929 /* Default-568h@2x.png */; };
 		ADD725461D9F4C8B000B7C3D /* face_beautification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = ADD725451D9F4C8B000B7C3D /* face_beautification.bundle */; };
 		ADF4E9B01D76FAE80074ED1A /* ar.bundle in Resources */ = {isa = PBXBuildFile; fileRef = ADF4E9A81D76FAE80074ED1A /* ar.bundle */; };
+		ADF4E9B61D76FAE80074ED1A /* v2.bundle in Resources */ = {isa = PBXBuildFile; fileRef = ADF4E9AF1D76FAE80074ED1A /* v2.bundle */; };
 		ADF4E9B81D76FB070074ED1A /* libnama.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF4E9B71D76FB070074ED1A /* libnama.a */; };
 		B62E2CD11D543AB2006E19E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B62E2CD01D543AB2006E19E6 /* main.m */; };
 		B62E2CD71D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B62E2CD51D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist */; };
@@ -58,12 +58,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		088589E11DF2B9A100FABF47 /* FURenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FURenderer.h; path = PLMediaStreamingKit/faceunity/FURenderer.h; sourceTree = SOURCE_ROOT; };
 		08DEEE701DC9FBC300CFB6AA /* BeagleDog.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = BeagleDog.bundle; path = PLMediaStreamingKit/faceunity/BeagleDog.bundle; sourceTree = SOURCE_ROOT; };
 		08DEEE711DC9FBC300CFB6AA /* ColorCrown.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = ColorCrown.bundle; path = PLMediaStreamingKit/faceunity/ColorCrown.bundle; sourceTree = SOURCE_ROOT; };
 		08DEEE721DC9FBC300CFB6AA /* Deer.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = Deer.bundle; path = PLMediaStreamingKit/faceunity/Deer.bundle; sourceTree = SOURCE_ROOT; };
 		08DEEE731DC9FBC300CFB6AA /* HappyRabbi.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = HappyRabbi.bundle; path = PLMediaStreamingKit/faceunity/HappyRabbi.bundle; sourceTree = SOURCE_ROOT; };
-		08DEEE741DC9FBC300CFB6AA /* hartshorn.bundle */ = {isa = PBXFileReference; lastKnownFileType = text; name = hartshorn.bundle; path = PLMediaStreamingKit/faceunity/hartshorn.bundle; sourceTree = SOURCE_ROOT; };
+		08DEEE741DC9FBC300CFB6AA /* hartshorn.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = hartshorn.bundle; path = PLMediaStreamingKit/faceunity/hartshorn.bundle; sourceTree = SOURCE_ROOT; };
 		08DEEE751DC9FBC300CFB6AA /* item0204.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = item0204.bundle; path = PLMediaStreamingKit/faceunity/item0204.bundle; sourceTree = SOURCE_ROOT; };
 		08DEEE761DC9FBC300CFB6AA /* item0208.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = item0208.bundle; path = PLMediaStreamingKit/faceunity/item0208.bundle; sourceTree = SOURCE_ROOT; };
 		08DEEE771DC9FBC300CFB6AA /* item0210.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = item0210.bundle; path = PLMediaStreamingKit/faceunity/item0210.bundle; sourceTree = SOURCE_ROOT; };
@@ -72,7 +71,6 @@
 		08DEEE7A1DC9FBC300CFB6AA /* PrincessCrown.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = PrincessCrown.bundle; path = PLMediaStreamingKit/faceunity/PrincessCrown.bundle; sourceTree = SOURCE_ROOT; };
 		08DEEE7B1DC9FBC300CFB6AA /* tiara.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = tiara.bundle; path = PLMediaStreamingKit/faceunity/tiara.bundle; sourceTree = SOURCE_ROOT; };
 		08DEEE7C1DC9FBC300CFB6AA /* YellowEar.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = YellowEar.bundle; path = PLMediaStreamingKit/faceunity/YellowEar.bundle; sourceTree = SOURCE_ROOT; };
-		08DF05651DFBD0C600F5FF42 /* v3.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = v3.bundle; path = PLMediaStreamingKit/faceunity/v3.bundle; sourceTree = SOURCE_ROOT; };
 		36A8E204DA95B787950401CB /* Pods-PLMediaStreamingKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLMediaStreamingKitDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* PLMediaStreamingKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLMediaStreamingKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -87,6 +85,7 @@
 		ADD725451D9F4C8B000B7C3D /* face_beautification.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = face_beautification.bundle; path = PLMediaStreamingKit/faceunity/face_beautification.bundle; sourceTree = SOURCE_ROOT; };
 		ADF4E9A81D76FAE80074ED1A /* ar.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = ar.bundle; path = PLMediaStreamingKit/faceunity/ar.bundle; sourceTree = SOURCE_ROOT; };
 		ADF4E9AB1D76FAE80074ED1A /* funama.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = funama.h; path = PLMediaStreamingKit/faceunity/funama.h; sourceTree = SOURCE_ROOT; };
+		ADF4E9AF1D76FAE80074ED1A /* v2.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = v2.bundle; path = PLMediaStreamingKit/faceunity/v2.bundle; sourceTree = SOURCE_ROOT; };
 		ADF4E9B71D76FB070074ED1A /* libnama.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnama.a; path = PLMediaStreamingKit/faceunity/libnama.a; sourceTree = SOURCE_ROOT; };
 		B62E2CD01D543AB2006E19E6 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PLMediaStreamingKit/main.m; sourceTree = SOURCE_ROOT; };
 		B62E2CD51D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "PLMediaStreamingKitDemo-Info.plist"; path = "PLMediaStreamingKit/PLMediaStreamingKitDemo-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -227,8 +226,7 @@
 				ADF4E9B71D76FB070074ED1A /* libnama.a */,
 				ADF4E9A81D76FAE80074ED1A /* ar.bundle */,
 				ADF4E9AB1D76FAE80074ED1A /* funama.h */,
-				088589E11DF2B9A100FABF47 /* FURenderer.h */,
-				08DF05651DFBD0C600F5FF42 /* v3.bundle */,
+				ADF4E9AF1D76FAE80074ED1A /* v2.bundle */,
 			);
 			name = faceunity;
 			sourceTree = "<group>";
@@ -333,11 +331,11 @@
 				08DEEE851DC9FBC300CFB6AA /* item0501.bundle in Resources */,
 				B62E2CE51D543B48006E19E6 /* Images.xcassets in Resources */,
 				B6DB78801D543E0F00BE8DC8 /* Main_iPhone.storyboard in Resources */,
-				08DF05661DFBD0C600F5FF42 /* v3.bundle in Resources */,
 				08DEEE861DC9FBC300CFB6AA /* Mood.bundle in Resources */,
 				08DEEE811DC9FBC300CFB6AA /* hartshorn.bundle in Resources */,
 				08DEEE841DC9FBC300CFB6AA /* item0210.bundle in Resources */,
 				08DEEE891DC9FBC300CFB6AA /* YellowEar.bundle in Resources */,
+				ADF4E9B61D76FAE80074ED1A /* v2.bundle in Resources */,
 				ADD725461D9F4C8B000B7C3D /* face_beautification.bundle in Resources */,
 				B62E2CE71D543B51006E19E6 /* qiniu.png in Resources */,
 				08DEEE881DC9FBC300CFB6AA /* tiara.bundle in Resources */,

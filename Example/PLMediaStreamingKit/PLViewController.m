@@ -13,7 +13,7 @@
 
 #include <sys/mman.h>
 #include <sys/stat.h>
-#import "FURenderer.h"
+#include "faceunity/funama.h"
 
 const char *stateNames[] = {
     "Unknow",
@@ -337,9 +337,9 @@ static void* mmap_sharing_file(NSString* fn_file,intptr_t* psize){
     if(!g_faceplugin_inited){
         g_faceplugin_inited = 1;
         intptr_t size = 0;
-    	void* v3data = mmap_bundle(@"v3.bundle", &size);
-
-        [[FURenderer shareRenderer] setupWithData:v3data ardata:NULL authPackage:NULL authSize:0];
+    	void* v2data = mmap_bundle(@"v2.bundle", &size);
+    	void* ardata = mmap_bundle(@"ar.bundle", &size);
+        fuSetup(v2data, ardata, NULL, 0);
     }
     //  Reset if camera change
     if (g_reset_camera){
@@ -375,13 +375,15 @@ static void* mmap_sharing_file(NSString* fn_file,intptr_t* psize){
     fuItemSetParamd(g_items[1], "color_level", 1.0);
     fuItemSetParams(g_items[1], "filter_name", g_filter_names[g_selected_filter]);
     fuItemSetParamd(g_items[1], "blur_radius", g_beauty_level * 20.0);
-    
     ////////////////////////////
-    
-    pixelBuffer = [[FURenderer shareRenderer] renderPixelBuffer:pixelBuffer withFrameId:g_frame_id items:g_items itemCount:2];
-    
+    // Key draw functions
+    CVPixelBufferLockBaseAddress(pixelBuffer, 0);
+    int h = (int)CVPixelBufferGetHeight(pixelBuffer);
+    int stride = (int)CVPixelBufferGetBytesPerRow(pixelBuffer);
+    int* img = (int*)CVPixelBufferGetBaseAddress(pixelBuffer);
+    fuRenderItems(0, img, stride/4, h, g_frame_id, g_items, 2);
+    CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
     g_frame_id++;
-    
     return pixelBuffer;
 }
 //------------faceunity-------------//

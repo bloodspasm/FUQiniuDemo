@@ -2,13 +2,6 @@
 
 PLMediaStreamingKit-FU 是 Faceunity 的面部跟踪和虚拟道具功能在 PLMediaStreamingKit 中的集成。PLMediaStreamingKit 是一个适用于 iOS 的 RTMP 直播推流 SDK，原版文档可以参考[这里](https://github.com/pili-engineering/PLMediaStreamingKit/blob/master/README.md)。
 
-## v3.0 重要更新
-在最新的版本中，全面升级了底层人脸数据库，数据库大小从原来的 10M 缩小到 3M ，同时取消了之前的 ar.mp3 数据。新的数据库可以支持稳定的全头模型，从而支持更好的道具定位、面部纹理；同时新的数据库强化了跟踪模块，从而提升虚拟化身道具的表情响应度和精度。
-
-由于升级了底层数据表达，v2.0 版本下的道具将全面不兼容。我司制作的道具请联系我司获取升级之后的道具包。自行制作的道具请联系我司获取道具升级工具和技术支持。
-
-v2.0 版本的系统仍然保留在 v2 分支中，但不再进行更新。
-
 ## 库文件
   - funama.h 函数调用接口头文件
   - libnama.a 人脸跟踪及道具绘制核心库    
@@ -16,7 +9,7 @@ v2.0 版本的系统仍然保留在 v2 分支中，但不再进行更新。
 ## 数据文件
 目录 faceunity/ 下的 \*.bundle 为程序的数据文件。数据文件中都是二进制数据，与扩展名无关。实际在app中使用时，打包在程序内或者从网络接口下载这些数据都是可行的，只要在相应的函数接口传入正确的二进制数据即可。
 
-其中 v3.bundle 是所有道具共用的数据文件，缺少该文件会导致初始化失败。其他每一个文件对应一个道具。自定义道具制作的文档和工具请联系我司获取。
+其中 ar.bundle 和 v2.bundle 是所有道具共用的数据文件，缺少其中任何一个会导致初始化失败。其他每一个文件对应一个道具。目前的道具是为测试展示设计的，之后会开放自定义道具制作的工具。
   
 ## 集成方法
 首先把库文件拷贝到工程目录中，并添加到 xcode 工程，之后在代码中包含 funama.h 即可调用相关函数。
@@ -37,8 +30,9 @@ EAGLContext* g_gl_context [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpen
 
 ```C
 intptr_t size = 0;
-void* v3data = [self mmap_bundle:@"v3" psize:&size];
-fuSetup(v3data, NULL, g_auth_package, sizeof(g_auth_package));
+void* v2data = [self mmap_bundle:@"v2" psize:&size];
+void* ardata = [self mmap_bundle:@"ar" psize:&size];
+fuSetup(v2data, ardata, g_auth_package, sizeof(g_auth_package));
 ```
 
 在 AVCaptureVideoDataOutputSampleBufferDelegate 的 cameraSourceDidGetPixelBuffer 回调接口中调用道具绘制函数进行绘制:
@@ -69,14 +63,14 @@ static int g_items[2] = {0, 0};
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
-  
-  if (!g_items[0])
-  {
-    intptr_t size = 0;    
-    void* data = [self mmap_bundle:@"XXXX.bundle" psize:&size];    
-    // key item creation function call
-        g_items[0] = fuCreateItemFromPackage(data, (int)size);
-  }
+	
+	if (!g_items[0])
+	{
+		intptr_t size = 0;		
+		void* data = [self mmap_bundle:@"XXXX.bundle" psize:&size];		
+		// key item creation function call
+    		g_items[0] = fuCreateItemFromPackage(data, (int)size);
+	}
 
     CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);    
     CVPixelBufferLockBaseAddress(pixelBuffer, 0);    
@@ -91,7 +85,7 @@ static int g_items[2] = {0, 0};
 
 ## 视频美颜
 美颜功能实现步骤与道具类似，首先加载美颜道具，并将fuCreateItemFromPackage返回的值赋给g_items[1]:
-  
+	
 ```C
 g_items[1] = fuCreateItemFromPackage(g_res_zip, (int)g_res_size);
 ```
@@ -139,7 +133,7 @@ fuRenderItems(0, img, stride/4, h, g_frame_id, g_items, 2);
 + (void)setupWithData:(void *)data ardata:(void *)ardata authPackage:(void *)package authSize:(int)size;
 
 ```
-- 单输入接口：输入一个pixelBuffer并返回一个加过美颜或道具的pixelBuffer，支持YUV及BGRA格式出入，且输出与输入格式一致。
+- 单输入接口：输入一个pixelBuffer并返回一个加过美颜或道具的pixelBuffer，支持YUV及BGRA格式输入，且输出与输入格式一致。
 
 ```C
 - (CVPixelBufferRef)renderPixelBuffer:(CVPixelBufferRef)pixelBuffer withFrameId:(int)frameid items:(int*)items itemCount:(int)itemCount;
@@ -159,6 +153,7 @@ typedef struct{
 }FUOutput;
 
 ```
+详细示例请见DualInput分支。
 
 ## 鉴权
 
@@ -207,31 +202,24 @@ static char g_auth_package[]={ ... }
 任何其他关于授权问题，请email：support@faceunity.com
 
 ## 函数接口及参数说明
-### [3.0.0] - 2016-12-10
-- 全面升级底层数据库，增加v3.mp3，去除v2.mp3和ar.mp3，缩小人脸数据包大小。
-- 底层数据支持全头部模型，从而支持更好的道具定位、面部纹理。
-- 加强表情跟踪模块，虚拟化身道具的表情响应性更强，精度更高。
-
-```
-## 函数接口及参数说明
 
 ```C
 /**
 \brief Initialize and authenticate your SDK instance to the FaceUnity server, must be called exactly once before all other functions.
-  The buffers should NEVER be freed while the other functions are still being called.
-  You can call this function multiple times to "switch pointers".
+	The buffers should NEVER be freed while the other functions are still being called.
+	You can call this function multiple times to "switch pointers".
 \param v2data should point to contents of the "v2.bin" we provide
 \param ardata should point to contents of the "ar.bin" we provide
 \param authdata is the pointer to the authentication data pack we provide. You must avoid storing the data in a file.
-  Normally you can just `#include "authpack.h"` and put `g_auth_package` here.
+	Normally you can just `#include "authpack.h"` and put `g_auth_package` here.
 \param sz_authdata is the authentication data size, we use plain int to avoid cross-language compilation issues.
-  Normally you can just `#include "authpack.h"` and put `sizeof(g_auth_package)` here.
+	Normally you can just `#include "authpack.h"` and put `sizeof(g_auth_package)` here.
 */
 void fuSetup(float* v2data,float* ardata,void* authdata,int sz_authdata);
 
 /**
 \brief Call this function when the GLES context has been lost and recreated.
-  That isn't a normal thing, so this function could leak resources on each call.
+	That isn't a normal thing, so this function could leak resources on each call.
 */
 void fuOnDeviceLost();
 
@@ -242,7 +230,7 @@ void fuOnCameraChange();
 
 /**
 \brief Create an accessory item from a binary package, you can discard the data after the call.
-  This function MUST be called in the same GLES context / thread as fuRenderItems.
+	This function MUST be called in the same GLES context / thread as fuRenderItems.
 \param data is the pointer to the data
 \param sz is the data size, we use plain int to avoid cross-language compilation issues
 \return an integer handle representing the item
@@ -251,27 +239,27 @@ int fuCreateItemFromPackage(void* data,int sz);
 
 /**
 \brief Destroy an accessory item.
-  This function MUST be called in the same GLES context / thread as the original fuCreateItemFromPackage.
+	This function MUST be called in the same GLES context / thread as the original fuCreateItemFromPackage.
 \param item is the handle to be destroyed
 */
 void fuDestroyItem(int item);
 
 /**
 \brief Destroy all accessory items ever created.
-  This function MUST be called in the same GLES context / thread as the original fuCreateItemFromPackage.
+	This function MUST be called in the same GLES context / thread as the original fuCreateItemFromPackage.
 */
 void fuDestroyAllItems();
 
 /**
 \brief Render a list of items on top of a GLES texture or a memory buffer.
-  This function needs a GLES 2.0+ context.
+	This function needs a GLES 2.0+ context.
 \param texid specifies a GLES texture. Set it to 0u if you want to render to a memory buffer.
 \param img specifies a memory buffer. Set it to NULL if you want to render to a texture.
-  If img is non-NULL, it will be overwritten by the rendered image when fuRenderItems returns
+	If img is non-NULL, it will be overwritten by the rendered image when fuRenderItems returns
 \param w specifies the image width
 \param h specifies the image height
 \param frameid specifies the current frame id. 
-  To get animated effects, please increase frame_id by 1 whenever you call this.
+	To get animated effects, please increase frame_id by 1 whenever you call this.
 \param p_items points to the list of items
 \param n_items is the number of items
 \return a new GLES texture containing the rendered image in the texture mode
@@ -291,7 +279,7 @@ int fuRenderItems(int texid,int* img,int w,int h,int frame_id, int* p_items,int 
 
 /**
 \brief Generalized interface for rendering a list of items.
-  This function needs a GLES 2.0+ context.
+	This function needs a GLES 2.0+ context.
 \param out_format is the output format
 \param out_ptr receives the rendering result, which is either a GLuint texture handle or a memory buffer
 \param in_format is the input format
@@ -299,16 +287,16 @@ int fuRenderItems(int texid,int* img,int w,int h,int frame_id, int* p_items,int 
 \param w specifies the image width
 \param h specifies the image height
 \param frameid specifies the current frame id. 
-  To get animated effects, please increase frame_id by 1 whenever you call this.
+	To get animated effects, please increase frame_id by 1 whenever you call this.
 \param p_items points to the list of items
 \param n_items is the number of items
 \return a GLuint texture handle containing the rendering result if out_format isn't FU_FORMAT_GL_CURRENT_FRAMEBUFFER
 */
 int fuRenderItemsEx(
-  int out_format,void* out_ptr,
-  int in_format,void* in_ptr,
-  int w,int h,int frame_id, int* p_items,int n_items);
-  
+	int out_format,void* out_ptr,
+	int in_format,void* in_ptr,
+	int w,int h,int frame_id, int* p_items,int n_items);
+	
 /**
 \brief Set an item parameter to a double value
 \param item specifies the item

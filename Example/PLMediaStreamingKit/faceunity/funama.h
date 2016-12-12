@@ -10,15 +10,14 @@
 \brief Initialize and authenticate your SDK instance to the FaceUnity server, must be called exactly once before all other functions.
 	The buffers should NEVER be freed while the other functions are still being called.
 	You can call this function multiple times to "switch pointers".
-\param v3data should point to contents of the "v3.bin" we provide
-\param ardata should be NULL
+\param v2data should point to contents of the "v2.bin" we provide
+\param ardata should point to contents of the "ar.bin" we provide
 \param authdata is the pointer to the authentication data pack we provide. You must avoid storing the data in a file.
 	Normally you can just `#include "authpack.h"` and put `g_auth_package` here.
 \param sz_authdata is the authentication data size, we use plain int to avoid cross-language compilation issues.
 	Normally you can just `#include "authpack.h"` and put `sizeof(g_auth_package)` here.
-\return non-zero for success, zero for failure
 */
-FUNAMA_API int fuSetup(float* v3data,float* ardata,void* authdata,int sz_authdata);
+FUNAMA_API void fuSetup(float* v2data,float* ardata,void* authdata,int sz_authdata);
 /**
 \brief Call this function when the GLES context has been lost and recreated.
 	That isn't a normal thing, so this function could leak resources on each call.
@@ -230,12 +229,4 @@ FUNAMA_API void fuSetDefaultOrientation(int rmode);
 \return The previous maximum number of faces tracked
 */
 FUNAMA_API int fuSetMaxFaces(int n);
-/**
-\brief Set the quality-performance tradeoff. 
-\param quality is the new quality value. 
-       It's a floating point number between 0 and 1.
-       Use 0 for maximum performance and 1 for maximum quality.
-       The default quality is 1 (maximum quality).
-*/
-FUNAMA_API void fuSetQualityTradeoff(float quality);
 #endif
