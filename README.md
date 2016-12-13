@@ -1,6 +1,6 @@
-# PLMediaStreamingKit-FU
+# FUQiniuDemo
 
-PLMediaStreamingKit-FU 是 Faceunity 的面部跟踪和虚拟道具功能在 PLMediaStreamingKit 中的集成。PLMediaStreamingKit 是一个适用于 iOS 的 RTMP 直播推流 SDK，原版文档可以参考[这里](https://github.com/pili-engineering/PLMediaStreamingKit/blob/master/README.md)。
+FUQiniuDemo 是 Faceunity 的面部跟踪和虚拟道具功能在 PLMediaStreamingKit 中的集成。PLMediaStreamingKit 是一个适用于 iOS 的 RTMP 直播推流 SDK，原版文档可以参考[这里](https://github.com/pili-engineering/PLMediaStreamingKit/blob/master/README.md)。
 
 ## 库文件
   - funama.h 函数调用接口头文件
