@@ -6,63 +6,6 @@
 #define FUNAMA_API
 #endif
 
-/**
-\brief Initialize and authenticate your SDK instance to the FaceUnity server, must be called exactly once before all other functions.
-	The buffers should NEVER be freed while the other functions are still being called.
-	You can call this function multiple times to "switch pointers".
-\param v3data should point to contents of the "v3.bin" we provide
-\param ardata should be NULL
-\param authdata is the pointer to the authentication data pack we provide. You must avoid storing the data in a file.
-	Normally you can just `#include "authpack.h"` and put `g_auth_package` here.
-\param sz_authdata is the authentication data size, we use plain int to avoid cross-language compilation issues.
-	Normally you can just `#include "authpack.h"` and put `sizeof(g_auth_package)` here.
-\return non-zero for success, zero for failure
-*/
-FUNAMA_API int fuSetup(float* v3data,float* ardata,void* authdata,int sz_authdata);
-/**
-\brief Call this function when the GLES context has been lost and recreated.
-	That isn't a normal thing, so this function could leak resources on each call.
-*/
-FUNAMA_API void fuOnDeviceLost();
-/**
-\brief Call this function to reset the face tracker on camera switches
-*/
-FUNAMA_API void fuOnCameraChange();
-/**
-\brief Create an accessory item from a binary package, you can discard the data after the call.
-	This function MUST be called in the same GLES context / thread as fuRenderItems.
-\param data is the pointer to the data
-\param sz is the data size, we use plain int to avoid cross-language compilation issues
-\return an integer handle representing the item
-*/
-FUNAMA_API int fuCreateItemFromPackage(void* data,int sz);
-/**
-\brief Destroy an accessory item.
-	This function MUST be called in the same GLES context / thread as the original fuCreateItemFromPackage.
-\param item is the handle to be destroyed
-*/
-FUNAMA_API void fuDestroyItem(int item);
-/**
-\brief Destroy all accessory items ever created.
-	This function MUST be called in the same GLES context / thread as the original fuCreateItemFromPackage.
-*/
-FUNAMA_API void fuDestroyAllItems();
-/**
-\brief Render a list of items on top of a GLES texture or a memory buffer.
-	This function needs a GLES 2.0+ context.
-\param texid specifies a GLES texture. Set it to 0u if you want to render to a memory buffer.
-\param img specifies a memory buffer. Set it to NULL if you want to render to a texture.
-	If img is non-NULL, it will be overwritten by the rendered image when fuRenderItems returns
-\param w specifies the image width
-\param h specifies the image height
-\param frameid specifies the current frame id. 
-	To get animated effects, please increase frame_id by 1 whenever you call this.
-\param p_items points to the list of items
-\param n_items is the number of items
-\return a new GLES texture containing the rendered image in the texture mode
-*/
-FUNAMA_API int fuRenderItems(int texid,int* img,int w,int h,int frame_id, int* p_items,int n_items);
-
 /*\brief An I/O format where `ptr` points to a BGRA buffer. It matches the camera format on iOS. */
 #define FU_FORMAT_BGRA_BUFFER 0
 /*\brief An I/O format where `ptr` points to a single GLuint that is a RGBA texture. It matches the hardware encoding format on Android. */
@@ -144,6 +87,67 @@ typedef struct{
 	PFRECEIVE_RESULT fcallback;//<the callback for receiving the image
 	void* param;//<the user-defined param for the callback
 }TGLRenderingDesc;
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+/**
+\brief Initialize and authenticate your SDK instance to the FaceUnity server, must be called exactly once before all other functions.
+	The buffers should NEVER be freed while the other functions are still being called.
+	You can call this function multiple times to "switch pointers".
+\param v3data should point to contents of the "v3.bin" we provide
+\param ardata should be NULL
+\param authdata is the pointer to the authentication data pack we provide. You must avoid storing the data in a file.
+	Normally you can just `#include "authpack.h"` and put `g_auth_package` here.
+\param sz_authdata is the authentication data size, we use plain int to avoid cross-language compilation issues.
+	Normally you can just `#include "authpack.h"` and put `sizeof(g_auth_package)` here.
+\return non-zero for success, zero for failure
+*/
+FUNAMA_API int fuSetup(float* v3data,float* ardata,void* authdata,int sz_authdata);
+/**
+\brief Call this function when the GLES context has been lost and recreated.
+	That isn't a normal thing, so this function could leak resources on each call.
+*/
+FUNAMA_API void fuOnDeviceLost();
+/**
+\brief Call this function to reset the face tracker on camera switches
+*/
+FUNAMA_API void fuOnCameraChange();
+/**
+\brief Create an accessory item from a binary package, you can discard the data after the call.
+	This function MUST be called in the same GLES context / thread as fuRenderItems.
+\param data is the pointer to the data
+\param sz is the data size, we use plain int to avoid cross-language compilation issues
+\return an integer handle representing the item
+*/
+FUNAMA_API int fuCreateItemFromPackage(void* data,int sz);
+/**
+\brief Destroy an accessory item.
+	This function MUST be called in the same GLES context / thread as the original fuCreateItemFromPackage.
+\param item is the handle to be destroyed
+*/
+FUNAMA_API void fuDestroyItem(int item);
+/**
+\brief Destroy all accessory items ever created.
+	This function MUST be called in the same GLES context / thread as the original fuCreateItemFromPackage.
+*/
+FUNAMA_API void fuDestroyAllItems();
+/**
+\brief Render a list of items on top of a GLES texture or a memory buffer.
+	This function needs a GLES 2.0+ context.
+\param texid specifies a GLES texture. Set it to 0u if you want to render to a memory buffer.
+\param img specifies a memory buffer. Set it to NULL if you want to render to a texture.
+	If img is non-NULL, it will be overwritten by the rendered image when fuRenderItems returns
+\param w specifies the image width
+\param h specifies the image height
+\param frameid specifies the current frame id. 
+	To get animated effects, please increase frame_id by 1 whenever you call this.
+\param p_items points to the list of items
+\param n_items is the number of items
+\return a new GLES texture containing the rendered image in the texture mode
+*/
+FUNAMA_API int fuRenderItems(int texid,int* img,int w,int h,int frame_id, int* p_items,int n_items);
+
 /**
 \brief Generalized interface for rendering a list of items.
 	This function needs a GLES 2.0+ context.
@@ -238,4 +242,8 @@ FUNAMA_API int fuSetMaxFaces(int n);
        The default quality is 1 (maximum quality).
 */
 FUNAMA_API void fuSetQualityTradeoff(float quality);
+#ifdef __cplusplus
+}
+#endif
+
 #endif
