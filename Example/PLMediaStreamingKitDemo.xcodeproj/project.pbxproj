@@ -7,20 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		08DEEE7D1DC9FBC300CFB6AA /* BeagleDog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE701DC9FBC300CFB6AA /* BeagleDog.bundle */; };
-		08DEEE7E1DC9FBC300CFB6AA /* ColorCrown.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE711DC9FBC300CFB6AA /* ColorCrown.bundle */; };
-		08DEEE7F1DC9FBC300CFB6AA /* Deer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE721DC9FBC300CFB6AA /* Deer.bundle */; };
-		08DEEE801DC9FBC300CFB6AA /* HappyRabbi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE731DC9FBC300CFB6AA /* HappyRabbi.bundle */; };
-		08DEEE811DC9FBC300CFB6AA /* hartshorn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE741DC9FBC300CFB6AA /* hartshorn.bundle */; };
-		08DEEE821DC9FBC300CFB6AA /* item0204.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE751DC9FBC300CFB6AA /* item0204.bundle */; };
-		08DEEE831DC9FBC300CFB6AA /* item0208.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE761DC9FBC300CFB6AA /* item0208.bundle */; };
-		08DEEE841DC9FBC300CFB6AA /* item0210.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE771DC9FBC300CFB6AA /* item0210.bundle */; };
-		08DEEE851DC9FBC300CFB6AA /* item0501.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE781DC9FBC300CFB6AA /* item0501.bundle */; };
-		08DEEE861DC9FBC300CFB6AA /* Mood.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE791DC9FBC300CFB6AA /* Mood.bundle */; };
-		08DEEE871DC9FBC300CFB6AA /* PrincessCrown.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE7A1DC9FBC300CFB6AA /* PrincessCrown.bundle */; };
-		08DEEE881DC9FBC300CFB6AA /* tiara.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE7B1DC9FBC300CFB6AA /* tiara.bundle */; };
-		08DEEE891DC9FBC300CFB6AA /* YellowEar.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DEEE7C1DC9FBC300CFB6AA /* YellowEar.bundle */; };
-		08DF05661DFBD0C600F5FF42 /* v3.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08DF05651DFBD0C600F5FF42 /* v3.bundle */; };
+		0848C9A51E12881C00535018 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0848C97D1E12881B00535018 /* Launch Screen.storyboard */; };
+		0848C9A61E12881C00535018 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0848C97F1E12881B00535018 /* Main_iPad.storyboard */; };
+		0848C9A71E12881C00535018 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9811E12881B00535018 /* Main_iPhone.storyboard */; };
+		0848C9BB1E12881C00535018 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0848C99A1E12881C00535018 /* Images.xcassets */; };
+		0848C9BD1E12881C00535018 /* PLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0848C99D1E12881C00535018 /* PLAppDelegate.m */; };
+		0848C9BF1E12881C00535018 /* PLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0848C9A11E12881C00535018 /* PLViewController.m */; };
+		0848C9C01E12881C00535018 /* qiniu.png in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9A21E12881C00535018 /* qiniu.png */; };
+		0848C9C11E12881C00535018 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 0848C9A41E12881C00535018 /* Reachability.m */; };
+		0848C9D81E128AC000535018 /* BeagleDog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9C41E128AC000535018 /* BeagleDog.bundle */; };
+		0848C9D91E128AC000535018 /* ColorCrown.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9C51E128AC000535018 /* ColorCrown.bundle */; };
+		0848C9DA1E128AC000535018 /* Deer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9C61E128AC000535018 /* Deer.bundle */; };
+		0848C9DB1E128AC000535018 /* einstein.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9C71E128AC000535018 /* einstein.bundle */; };
+		0848C9DC1E128AC000535018 /* face_beautification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9C81E128AC000535018 /* face_beautification.bundle */; };
+		0848C9DD1E128AC000535018 /* HappyRabbi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9CB1E128AC000535018 /* HappyRabbi.bundle */; };
+		0848C9DE1E128AC000535018 /* hartshorn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9CC1E128AC000535018 /* hartshorn.bundle */; };
+		0848C9DF1E128AC000535018 /* item0204.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9CD1E128AC000535018 /* item0204.bundle */; };
+		0848C9E01E128AC000535018 /* item0208.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9CE1E128AC000535018 /* item0208.bundle */; };
+		0848C9E11E128AC000535018 /* item0210.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9CF1E128AC000535018 /* item0210.bundle */; };
+		0848C9E21E128AC000535018 /* item0501.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9D01E128AC000535018 /* item0501.bundle */; };
+		0848C9E31E128AC000535018 /* libnama.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0848C9D11E128AC000535018 /* libnama.a */; };
+		0848C9E41E128AC000535018 /* Mood.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9D21E128AC000535018 /* Mood.bundle */; };
+		0848C9E51E128AC000535018 /* PrincessCrown.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9D31E128AC000535018 /* PrincessCrown.bundle */; };
+		0848C9E61E128AC000535018 /* tiara.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9D41E128AC000535018 /* tiara.bundle */; };
+		0848C9E71E128AC000535018 /* v3.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9D51E128AC000535018 /* v3.bundle */; };
+		0848C9E81E128AC000535018 /* YellowEar.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9D61E128AC000535018 /* YellowEar.bundle */; };
 		52BE1E79748BA53D433159B1 /* libPods-PLMediaStreamingKitDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8A06DB17A42B6A6EC21E6AF /* libPods-PLMediaStreamingKitDemo.a */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
@@ -28,23 +39,12 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		769750EF1A6331080079423B /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769750EC1A6329DC0079423B /* VideoToolbox.framework */; };
-		AD992C6D1D9A78A8006BD435 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD992C6B1D9A78A7006BD435 /* Main_iPad.storyboard */; };
 		ADB2860A1DA1E92900436929 /* 120_120.png in Resources */ = {isa = PBXBuildFile; fileRef = ADB286091DA1E92900436929 /* 120_120.png */; };
 		ADB2860D1DA1ED7E00436929 /* Default-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = ADB2860B1DA1ED7E00436929 /* Default-568h.png */; };
 		ADB2860E1DA1ED7E00436929 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ADB2860C1DA1ED7E00436929 /* Default-568h@2x.png */; };
-		ADD725461D9F4C8B000B7C3D /* face_beautification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = ADD725451D9F4C8B000B7C3D /* face_beautification.bundle */; };
-		ADF4E9B01D76FAE80074ED1A /* ar.bundle in Resources */ = {isa = PBXBuildFile; fileRef = ADF4E9A81D76FAE80074ED1A /* ar.bundle */; };
-		ADF4E9B81D76FB070074ED1A /* libnama.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF4E9B71D76FB070074ED1A /* libnama.a */; };
 		B62E2CD11D543AB2006E19E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B62E2CD01D543AB2006E19E6 /* main.m */; };
 		B62E2CD71D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B62E2CD51D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist */; };
 		B62E2CDA1D543AF8006E19E6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B62E2CD81D543AF8006E19E6 /* InfoPlist.strings */; };
-		B62E2CE11D543B2C006E19E6 /* PLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B62E2CDC1D543B2C006E19E6 /* PLAppDelegate.m */; };
-		B62E2CE21D543B2C006E19E6 /* PLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B62E2CDE1D543B2C006E19E6 /* PLViewController.m */; };
-		B62E2CE31D543B2C006E19E6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B62E2CE01D543B2C006E19E6 /* Reachability.m */; };
-		B62E2CE51D543B48006E19E6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62E2CE41D543B48006E19E6 /* Images.xcassets */; };
-		B62E2CE71D543B51006E19E6 /* qiniu.png in Resources */ = {isa = PBXBuildFile; fileRef = B62E2CE61D543B51006E19E6 /* qiniu.png */; };
-		B6DB787F1D543E0F00BE8DC8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6DB787B1D543E0F00BE8DC8 /* Launch Screen.storyboard */; };
-		B6DB78801D543E0F00BE8DC8 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6DB787D1D543E0F00BE8DC8 /* Main_iPhone.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,21 +58,36 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		088589E11DF2B9A100FABF47 /* FURenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FURenderer.h; path = PLMediaStreamingKit/faceunity/FURenderer.h; sourceTree = SOURCE_ROOT; };
-		08DEEE701DC9FBC300CFB6AA /* BeagleDog.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = BeagleDog.bundle; path = PLMediaStreamingKit/faceunity/BeagleDog.bundle; sourceTree = SOURCE_ROOT; };
-		08DEEE711DC9FBC300CFB6AA /* ColorCrown.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = ColorCrown.bundle; path = PLMediaStreamingKit/faceunity/ColorCrown.bundle; sourceTree = SOURCE_ROOT; };
-		08DEEE721DC9FBC300CFB6AA /* Deer.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = Deer.bundle; path = PLMediaStreamingKit/faceunity/Deer.bundle; sourceTree = SOURCE_ROOT; };
-		08DEEE731DC9FBC300CFB6AA /* HappyRabbi.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = HappyRabbi.bundle; path = PLMediaStreamingKit/faceunity/HappyRabbi.bundle; sourceTree = SOURCE_ROOT; };
-		08DEEE741DC9FBC300CFB6AA /* hartshorn.bundle */ = {isa = PBXFileReference; lastKnownFileType = text; name = hartshorn.bundle; path = PLMediaStreamingKit/faceunity/hartshorn.bundle; sourceTree = SOURCE_ROOT; };
-		08DEEE751DC9FBC300CFB6AA /* item0204.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = item0204.bundle; path = PLMediaStreamingKit/faceunity/item0204.bundle; sourceTree = SOURCE_ROOT; };
-		08DEEE761DC9FBC300CFB6AA /* item0208.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = item0208.bundle; path = PLMediaStreamingKit/faceunity/item0208.bundle; sourceTree = SOURCE_ROOT; };
-		08DEEE771DC9FBC300CFB6AA /* item0210.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = item0210.bundle; path = PLMediaStreamingKit/faceunity/item0210.bundle; sourceTree = SOURCE_ROOT; };
-		08DEEE781DC9FBC300CFB6AA /* item0501.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = item0501.bundle; path = PLMediaStreamingKit/faceunity/item0501.bundle; sourceTree = SOURCE_ROOT; };
-		08DEEE791DC9FBC300CFB6AA /* Mood.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = Mood.bundle; path = PLMediaStreamingKit/faceunity/Mood.bundle; sourceTree = SOURCE_ROOT; };
-		08DEEE7A1DC9FBC300CFB6AA /* PrincessCrown.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = PrincessCrown.bundle; path = PLMediaStreamingKit/faceunity/PrincessCrown.bundle; sourceTree = SOURCE_ROOT; };
-		08DEEE7B1DC9FBC300CFB6AA /* tiara.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = tiara.bundle; path = PLMediaStreamingKit/faceunity/tiara.bundle; sourceTree = SOURCE_ROOT; };
-		08DEEE7C1DC9FBC300CFB6AA /* YellowEar.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = YellowEar.bundle; path = PLMediaStreamingKit/faceunity/YellowEar.bundle; sourceTree = SOURCE_ROOT; };
-		08DF05651DFBD0C600F5FF42 /* v3.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = v3.bundle; path = PLMediaStreamingKit/faceunity/v3.bundle; sourceTree = SOURCE_ROOT; };
+		0848C97E1E12881B00535018 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
+		0848C9801E12881B00535018 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		0848C9821E12881B00535018 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		0848C99A1E12881C00535018 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		0848C99C1E12881C00535018 /* PLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAppDelegate.h; sourceTree = "<group>"; };
+		0848C99D1E12881C00535018 /* PLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAppDelegate.m; sourceTree = "<group>"; };
+		0848C9A01E12881C00535018 /* PLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLViewController.h; sourceTree = "<group>"; };
+		0848C9A11E12881C00535018 /* PLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLViewController.m; sourceTree = "<group>"; };
+		0848C9A21E12881C00535018 /* qiniu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qiniu.png; sourceTree = "<group>"; };
+		0848C9A31E12881C00535018 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		0848C9A41E12881C00535018 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		0848C9C41E128AC000535018 /* BeagleDog.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = BeagleDog.bundle; sourceTree = "<group>"; };
+		0848C9C51E128AC000535018 /* ColorCrown.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = ColorCrown.bundle; sourceTree = "<group>"; };
+		0848C9C61E128AC000535018 /* Deer.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = Deer.bundle; sourceTree = "<group>"; };
+		0848C9C71E128AC000535018 /* einstein.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = einstein.bundle; sourceTree = "<group>"; };
+		0848C9C81E128AC000535018 /* face_beautification.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = face_beautification.bundle; sourceTree = "<group>"; };
+		0848C9C91E128AC000535018 /* funama.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = funama.h; sourceTree = "<group>"; };
+		0848C9CA1E128AC000535018 /* FURenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FURenderer.h; sourceTree = "<group>"; };
+		0848C9CB1E128AC000535018 /* HappyRabbi.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = HappyRabbi.bundle; sourceTree = "<group>"; };
+		0848C9CC1E128AC000535018 /* hartshorn.bundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hartshorn.bundle; sourceTree = "<group>"; };
+		0848C9CD1E128AC000535018 /* item0204.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = item0204.bundle; sourceTree = "<group>"; };
+		0848C9CE1E128AC000535018 /* item0208.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = item0208.bundle; sourceTree = "<group>"; };
+		0848C9CF1E128AC000535018 /* item0210.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = item0210.bundle; sourceTree = "<group>"; };
+		0848C9D01E128AC000535018 /* item0501.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = item0501.bundle; sourceTree = "<group>"; };
+		0848C9D11E128AC000535018 /* libnama.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libnama.a; sourceTree = "<group>"; };
+		0848C9D21E128AC000535018 /* Mood.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = Mood.bundle; sourceTree = "<group>"; };
+		0848C9D31E128AC000535018 /* PrincessCrown.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = PrincessCrown.bundle; sourceTree = "<group>"; };
+		0848C9D41E128AC000535018 /* tiara.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = tiara.bundle; sourceTree = "<group>"; };
+		0848C9D51E128AC000535018 /* v3.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = v3.bundle; sourceTree = "<group>"; };
+		0848C9D61E128AC000535018 /* YellowEar.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = YellowEar.bundle; sourceTree = "<group>"; };
 		36A8E204DA95B787950401CB /* Pods-PLMediaStreamingKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLMediaStreamingKitDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* PLMediaStreamingKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PLMediaStreamingKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -80,28 +95,13 @@
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6003F5AE195388D20070C39A /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		769750EC1A6329DC0079423B /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
-		AD992C6C1D9A78A8006BD435 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = PLMediaStreamingKit/Base.lproj/Main_iPad.storyboard; sourceTree = SOURCE_ROOT; };
 		ADB286091DA1E92900436929 /* 120_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 120_120.png; path = Assets/120_120.png; sourceTree = SOURCE_ROOT; };
 		ADB2860B1DA1ED7E00436929 /* Default-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h.png"; path = "Assets/Default-568h.png"; sourceTree = SOURCE_ROOT; };
 		ADB2860C1DA1ED7E00436929 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Assets/Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
-		ADD725451D9F4C8B000B7C3D /* face_beautification.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = face_beautification.bundle; path = PLMediaStreamingKit/faceunity/face_beautification.bundle; sourceTree = SOURCE_ROOT; };
-		ADF4E9A81D76FAE80074ED1A /* ar.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; name = ar.bundle; path = PLMediaStreamingKit/faceunity/ar.bundle; sourceTree = SOURCE_ROOT; };
-		ADF4E9AB1D76FAE80074ED1A /* funama.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = funama.h; path = PLMediaStreamingKit/faceunity/funama.h; sourceTree = SOURCE_ROOT; };
-		ADF4E9B71D76FB070074ED1A /* libnama.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnama.a; path = PLMediaStreamingKit/faceunity/libnama.a; sourceTree = SOURCE_ROOT; };
 		B62E2CD01D543AB2006E19E6 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PLMediaStreamingKit/main.m; sourceTree = SOURCE_ROOT; };
 		B62E2CD51D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "PLMediaStreamingKitDemo-Info.plist"; path = "PLMediaStreamingKit/PLMediaStreamingKitDemo-Info.plist"; sourceTree = SOURCE_ROOT; };
 		B62E2CD61D543AE3006E19E6 /* PLMediaStreamingKitDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PLMediaStreamingKitDemo-Prefix.pch"; path = "PLMediaStreamingKit/PLMediaStreamingKitDemo-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		B62E2CD91D543AF8006E19E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = PLMediaStreamingKit/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
-		B62E2CDB1D543B2C006E19E6 /* PLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PLAppDelegate.h; path = PLMediaStreamingKit/PLAppDelegate.h; sourceTree = SOURCE_ROOT; };
-		B62E2CDC1D543B2C006E19E6 /* PLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PLAppDelegate.m; path = PLMediaStreamingKit/PLAppDelegate.m; sourceTree = SOURCE_ROOT; };
-		B62E2CDD1D543B2C006E19E6 /* PLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PLViewController.h; path = PLMediaStreamingKit/PLViewController.h; sourceTree = SOURCE_ROOT; };
-		B62E2CDE1D543B2C006E19E6 /* PLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PLViewController.m; path = PLMediaStreamingKit/PLViewController.m; sourceTree = SOURCE_ROOT; };
-		B62E2CDF1D543B2C006E19E6 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = PLMediaStreamingKit/Reachability.h; sourceTree = SOURCE_ROOT; };
-		B62E2CE01D543B2C006E19E6 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = PLMediaStreamingKit/Reachability.m; sourceTree = SOURCE_ROOT; };
-		B62E2CE41D543B48006E19E6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PLMediaStreamingKit/Images.xcassets; sourceTree = SOURCE_ROOT; };
-		B62E2CE61D543B51006E19E6 /* qiniu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = qiniu.png; path = PLMediaStreamingKit/qiniu.png; sourceTree = SOURCE_ROOT; };
-		B6DB787C1D543E0F00BE8DC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "PLMediaStreamingKit/Base.lproj/Launch Screen.storyboard"; sourceTree = SOURCE_ROOT; };
-		B6DB787E1D543E0F00BE8DC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = PLMediaStreamingKit/Base.lproj/Main_iPhone.storyboard; sourceTree = SOURCE_ROOT; };
 		B8A06DB17A42B6A6EC21E6AF /* libPods-PLMediaStreamingKitDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PLMediaStreamingKitDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE7E497A43C319A16A6ACED9 /* Pods-PLMediaStreamingKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLMediaStreamingKitDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,7 +113,7 @@
 			files = (
 				769750EF1A6331080079423B /* VideoToolbox.framework in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
-				ADF4E9B81D76FB070074ED1A /* libnama.a in Frameworks */,
+				0848C9E31E128AC000535018 /* libnama.a in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
 				52BE1E79748BA53D433159B1 /* libPods-PLMediaStreamingKitDemo.a in Frameworks */,
@@ -132,6 +132,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0848C97C1E12881B00535018 /* PLMediaStreamingKit */ = {
+			isa = PBXGroup;
+			children = (
+				ADB2860B1DA1ED7E00436929 /* Default-568h.png */,
+				ADB2860C1DA1ED7E00436929 /* Default-568h@2x.png */,
+				ADB286091DA1E92900436929 /* 120_120.png */,
+				0848C97D1E12881B00535018 /* Launch Screen.storyboard */,
+				0848C97F1E12881B00535018 /* Main_iPad.storyboard */,
+				0848C9811E12881B00535018 /* Main_iPhone.storyboard */,
+				0848C9C21E128AC000535018 /* faceunity */,
+				0848C99A1E12881C00535018 /* Images.xcassets */,
+				0848C99C1E12881C00535018 /* PLAppDelegate.h */,
+				0848C99D1E12881C00535018 /* PLAppDelegate.m */,
+				0848C9A01E12881C00535018 /* PLViewController.h */,
+				0848C9A11E12881C00535018 /* PLViewController.m */,
+				0848C9A21E12881C00535018 /* qiniu.png */,
+				0848C9A31E12881C00535018 /* Reachability.h */,
+				0848C9A41E12881C00535018 /* Reachability.m */,
+				6003F594195388D20070C39A /* Supporting Files */,
+			);
+			path = PLMediaStreamingKit;
+			sourceTree = "<group>";
+		};
+		0848C9C21E128AC000535018 /* faceunity */ = {
+			isa = PBXGroup;
+			children = (
+				0848C9C41E128AC000535018 /* BeagleDog.bundle */,
+				0848C9C51E128AC000535018 /* ColorCrown.bundle */,
+				0848C9C61E128AC000535018 /* Deer.bundle */,
+				0848C9C71E128AC000535018 /* einstein.bundle */,
+				0848C9C81E128AC000535018 /* face_beautification.bundle */,
+				0848C9C91E128AC000535018 /* funama.h */,
+				0848C9CA1E128AC000535018 /* FURenderer.h */,
+				0848C9CB1E128AC000535018 /* HappyRabbi.bundle */,
+				0848C9CC1E128AC000535018 /* hartshorn.bundle */,
+				0848C9CD1E128AC000535018 /* item0204.bundle */,
+				0848C9CE1E128AC000535018 /* item0208.bundle */,
+				0848C9CF1E128AC000535018 /* item0210.bundle */,
+				0848C9D01E128AC000535018 /* item0501.bundle */,
+				0848C9D11E128AC000535018 /* libnama.a */,
+				0848C9D21E128AC000535018 /* Mood.bundle */,
+				0848C9D31E128AC000535018 /* PrincessCrown.bundle */,
+				0848C9D41E128AC000535018 /* tiara.bundle */,
+				0848C9D51E128AC000535018 /* v3.bundle */,
+				0848C9D61E128AC000535018 /* YellowEar.bundle */,
+			);
+			path = faceunity;
+			sourceTree = "<group>";
+		};
 		20AC007F0A12BD099763AAA6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -144,7 +193,7 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
-				6003F593195388D20070C39A /* PLMediaStreamingKit */,
+				0848C97C1E12881B00535018 /* PLMediaStreamingKit */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
 				20AC007F0A12BD099763AAA6 /* Pods */,
@@ -172,30 +221,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6003F593195388D20070C39A /* PLMediaStreamingKit */ = {
-			isa = PBXGroup;
-			children = (
-				ADB2860B1DA1ED7E00436929 /* Default-568h.png */,
-				ADB2860C1DA1ED7E00436929 /* Default-568h@2x.png */,
-				ADB286091DA1E92900436929 /* 120_120.png */,
-				AD992C6B1D9A78A7006BD435 /* Main_iPad.storyboard */,
-				ADF4E9A71D76FAC30074ED1A /* faceunity */,
-				B62E2CDB1D543B2C006E19E6 /* PLAppDelegate.h */,
-				B62E2CDC1D543B2C006E19E6 /* PLAppDelegate.m */,
-				B62E2CDD1D543B2C006E19E6 /* PLViewController.h */,
-				B62E2CDE1D543B2C006E19E6 /* PLViewController.m */,
-				B62E2CDF1D543B2C006E19E6 /* Reachability.h */,
-				B62E2CE01D543B2C006E19E6 /* Reachability.m */,
-				B62E2CE61D543B51006E19E6 /* qiniu.png */,
-				B6DB787B1D543E0F00BE8DC8 /* Launch Screen.storyboard */,
-				B6DB787D1D543E0F00BE8DC8 /* Main_iPhone.storyboard */,
-				B62E2CE41D543B48006E19E6 /* Images.xcassets */,
-				6003F594195388D20070C39A /* Supporting Files */,
-			);
-			name = PLMediaStreamingKit;
-			path = PLCameraStreamingKit;
-			sourceTree = "<group>";
-		};
 		6003F594195388D20070C39A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,32 +230,7 @@
 				B62E2CD61D543AE3006E19E6 /* PLMediaStreamingKitDemo-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		ADF4E9A71D76FAC30074ED1A /* faceunity */ = {
-			isa = PBXGroup;
-			children = (
-				08DEEE701DC9FBC300CFB6AA /* BeagleDog.bundle */,
-				08DEEE711DC9FBC300CFB6AA /* ColorCrown.bundle */,
-				08DEEE721DC9FBC300CFB6AA /* Deer.bundle */,
-				08DEEE731DC9FBC300CFB6AA /* HappyRabbi.bundle */,
-				08DEEE741DC9FBC300CFB6AA /* hartshorn.bundle */,
-				08DEEE751DC9FBC300CFB6AA /* item0204.bundle */,
-				08DEEE761DC9FBC300CFB6AA /* item0208.bundle */,
-				08DEEE771DC9FBC300CFB6AA /* item0210.bundle */,
-				08DEEE781DC9FBC300CFB6AA /* item0501.bundle */,
-				08DEEE791DC9FBC300CFB6AA /* Mood.bundle */,
-				08DEEE7A1DC9FBC300CFB6AA /* PrincessCrown.bundle */,
-				08DEEE7B1DC9FBC300CFB6AA /* tiara.bundle */,
-				08DEEE7C1DC9FBC300CFB6AA /* YellowEar.bundle */,
-				ADD725451D9F4C8B000B7C3D /* face_beautification.bundle */,
-				ADF4E9B71D76FB070074ED1A /* libnama.a */,
-				ADF4E9A81D76FAE80074ED1A /* ar.bundle */,
-				ADF4E9AB1D76FAE80074ED1A /* funama.h */,
-				088589E11DF2B9A100FABF47 /* FURenderer.h */,
-				08DF05651DFBD0C600F5FF42 /* v3.bundle */,
-			);
-			name = faceunity;
+			path = ../PLCameraStreamingKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,32 +322,32 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0848C9E01E128AC000535018 /* item0208.bundle in Resources */,
 				ADB2860D1DA1ED7E00436929 /* Default-568h.png in Resources */,
+				0848C9E51E128AC000535018 /* PrincessCrown.bundle in Resources */,
+				0848C9DF1E128AC000535018 /* item0204.bundle in Resources */,
 				B62E2CDA1D543AF8006E19E6 /* InfoPlist.strings in Resources */,
 				ADB2860A1DA1E92900436929 /* 120_120.png in Resources */,
-				08DEEE7F1DC9FBC300CFB6AA /* Deer.bundle in Resources */,
-				08DEEE831DC9FBC300CFB6AA /* item0208.bundle in Resources */,
+				0848C9DC1E128AC000535018 /* face_beautification.bundle in Resources */,
+				0848C9DA1E128AC000535018 /* Deer.bundle in Resources */,
+				0848C9E81E128AC000535018 /* YellowEar.bundle in Resources */,
+				0848C9DE1E128AC000535018 /* hartshorn.bundle in Resources */,
+				0848C9A51E12881C00535018 /* Launch Screen.storyboard in Resources */,
+				0848C9D81E128AC000535018 /* BeagleDog.bundle in Resources */,
+				0848C9E41E128AC000535018 /* Mood.bundle in Resources */,
+				0848C9A61E12881C00535018 /* Main_iPad.storyboard in Resources */,
+				0848C9C01E12881C00535018 /* qiniu.png in Resources */,
+				0848C9E21E128AC000535018 /* item0501.bundle in Resources */,
 				ADB2860E1DA1ED7E00436929 /* Default-568h@2x.png in Resources */,
-				08DEEE7D1DC9FBC300CFB6AA /* BeagleDog.bundle in Resources */,
-				AD992C6D1D9A78A8006BD435 /* Main_iPad.storyboard in Resources */,
-				08DEEE851DC9FBC300CFB6AA /* item0501.bundle in Resources */,
-				B62E2CE51D543B48006E19E6 /* Images.xcassets in Resources */,
-				B6DB78801D543E0F00BE8DC8 /* Main_iPhone.storyboard in Resources */,
-				08DF05661DFBD0C600F5FF42 /* v3.bundle in Resources */,
-				08DEEE861DC9FBC300CFB6AA /* Mood.bundle in Resources */,
-				08DEEE811DC9FBC300CFB6AA /* hartshorn.bundle in Resources */,
-				08DEEE841DC9FBC300CFB6AA /* item0210.bundle in Resources */,
-				08DEEE891DC9FBC300CFB6AA /* YellowEar.bundle in Resources */,
-				ADD725461D9F4C8B000B7C3D /* face_beautification.bundle in Resources */,
-				B62E2CE71D543B51006E19E6 /* qiniu.png in Resources */,
-				08DEEE881DC9FBC300CFB6AA /* tiara.bundle in Resources */,
-				08DEEE7E1DC9FBC300CFB6AA /* ColorCrown.bundle in Resources */,
-				08DEEE821DC9FBC300CFB6AA /* item0204.bundle in Resources */,
-				B6DB787F1D543E0F00BE8DC8 /* Launch Screen.storyboard in Resources */,
-				08DEEE871DC9FBC300CFB6AA /* PrincessCrown.bundle in Resources */,
-				ADF4E9B01D76FAE80074ED1A /* ar.bundle in Resources */,
+				0848C9DD1E128AC000535018 /* HappyRabbi.bundle in Resources */,
+				0848C9E11E128AC000535018 /* item0210.bundle in Resources */,
+				0848C9A71E12881C00535018 /* Main_iPhone.storyboard in Resources */,
+				0848C9BB1E12881C00535018 /* Images.xcassets in Resources */,
+				0848C9E61E128AC000535018 /* tiara.bundle in Resources */,
+				0848C9E71E128AC000535018 /* v3.bundle in Resources */,
+				0848C9D91E128AC000535018 /* ColorCrown.bundle in Resources */,
+				0848C9DB1E128AC000535018 /* einstein.bundle in Resources */,
 				B62E2CD71D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist in Resources */,
-				08DEEE801DC9FBC300CFB6AA /* HappyRabbi.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,9 +414,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B62E2CD11D543AB2006E19E6 /* main.m in Sources */,
-				B62E2CE11D543B2C006E19E6 /* PLAppDelegate.m in Sources */,
-				B62E2CE31D543B2C006E19E6 /* Reachability.m in Sources */,
-				B62E2CE21D543B2C006E19E6 /* PLViewController.m in Sources */,
+				0848C9C11E12881C00535018 /* Reachability.m in Sources */,
+				0848C9BF1E12881C00535018 /* PLViewController.m in Sources */,
+				0848C9BD1E12881C00535018 /* PLAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,12 +438,28 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		AD992C6B1D9A78A7006BD435 /* Main_iPad.storyboard */ = {
+		0848C97D1E12881B00535018 /* Launch Screen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				AD992C6C1D9A78A8006BD435 /* Base */,
+				0848C97E1E12881B00535018 /* Base */,
+			);
+			name = "Launch Screen.storyboard";
+			sourceTree = "<group>";
+		};
+		0848C97F1E12881B00535018 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0848C9801E12881B00535018 /* Base */,
 			);
 			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		0848C9811E12881B00535018 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0848C9821E12881B00535018 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
 		};
 		B62E2CD81D543AF8006E19E6 /* InfoPlist.strings */ = {
@@ -452,22 +468,6 @@
 				B62E2CD91D543AF8006E19E6 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		B6DB787B1D543E0F00BE8DC8 /* Launch Screen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B6DB787C1D543E0F00BE8DC8 /* Base */,
-			);
-			name = "Launch Screen.storyboard";
-			sourceTree = "<group>";
-		};
-		B6DB787D1D543E0F00BE8DC8 /* Main_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B6DB787E1D543E0F00BE8DC8 /* Base */,
-			);
-			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
