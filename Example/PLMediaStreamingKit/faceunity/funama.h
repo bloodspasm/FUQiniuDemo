@@ -242,6 +242,8 @@ FUNAMA_API int fuSetMaxFaces(int n);
        The default quality is 1 (maximum quality).
 */
 FUNAMA_API void fuSetQualityTradeoff(float quality);
+
+FUNAMA_API void fuGetEyeRotation(int face_id, float* pret);
 #ifdef __cplusplus
 }
 #endif
