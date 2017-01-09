@@ -14,6 +14,7 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #import "FURenderer.h"
+#import "authpack.h"
 
 const char *stateNames[] = {
     "Unknow",
@@ -339,7 +340,7 @@ static void* mmap_sharing_file(NSString* fn_file,intptr_t* psize){
         intptr_t size = 0;
     	void* v3data = mmap_bundle(@"v3.bundle", &size);
 
-        [[FURenderer shareRenderer] setupWithData:v3data ardata:NULL authPackage:NULL authSize:0];
+        [[FURenderer shareRenderer] setupWithData:v3data ardata:NULL authPackage:g_auth_package authSize:sizeof(g_auth_package)];
     }
     //  Reset if camera change
     if (g_reset_camera){
@@ -374,7 +375,7 @@ static void* mmap_sharing_file(NSString* fn_file,intptr_t* psize){
     //  Set item parameters
     fuItemSetParamd(g_items[1], "color_level", 1.0);
     fuItemSetParams(g_items[1], "filter_name", g_filter_names[g_selected_filter]);
-    fuItemSetParamd(g_items[1], "blur_radius", g_beauty_level * 20.0);
+    fuItemSetParamd(g_items[1], "blur_level", g_beauty_level * 5);
     
     ////////////////////////////
     

@@ -103,6 +103,7 @@
 		B62E2CD61D543AE3006E19E6 /* PLMediaStreamingKitDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PLMediaStreamingKitDemo-Prefix.pch"; path = "PLMediaStreamingKit/PLMediaStreamingKitDemo-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		B62E2CD91D543AF8006E19E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = PLMediaStreamingKit/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
 		B8A06DB17A42B6A6EC21E6AF /* libPods-PLMediaStreamingKitDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PLMediaStreamingKitDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD6D534D1E23B49000007792 /* authpack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = authpack.h; sourceTree = "<group>"; };
 		DE7E497A43C319A16A6ACED9 /* Pods-PLMediaStreamingKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLMediaStreamingKitDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -165,6 +166,7 @@
 				0848C9C81E128AC000535018 /* face_beautification.bundle */,
 				0848C9C91E128AC000535018 /* funama.h */,
 				0848C9CA1E128AC000535018 /* FURenderer.h */,
+				CD6D534D1E23B49000007792 /* authpack.h */,
 				0848C9CB1E128AC000535018 /* HappyRabbi.bundle */,
 				0848C9CC1E128AC000535018 /* hartshorn.bundle */,
 				0848C9CD1E128AC000535018 /* item0204.bundle */,
