@@ -2,8 +2,11 @@
 
 FUQiniuDemo 是 Faceunity 的面部跟踪和虚拟道具功能在 PLMediaStreamingKit 中的集成。PLMediaStreamingKit 是一个适用于 iOS 的 RTMP 直播推流 SDK，原版文档可以参考[这里](https://github.com/pili-engineering/PLMediaStreamingKit/blob/master/README.md)。
 
+## v3.1 美颜更新
+在v3.1中，全面更新了美颜的功能和效果。改进了磨皮算法，使得在细腻皮肤的同时充分保持皮肤的细节，减少涂抹感。增加智能美型功能，可以自然地实现瘦脸和大眼效果，并可根据需要进行调节。
+
 ## v3.0 重要更新
-在最新的版本中，全面升级了底层人脸数据库，数据库大小从原来的 10M 缩小到 3M ，同时取消了之前的 ar.mp3 数据。新的数据库可以支持稳定的全头模型，从而支持更好的道具定位、面部纹理；同时新的数据库强化了跟踪模块，从而提升虚拟化身道具的表情响应度和精度。
+在v3.0中，全面升级了底层人脸数据库，数据库大小从原来的 10M 缩小到 3M ，同时取消了之前的 ar.mp3 数据。新的数据库可以支持稳定的全头模型，从而支持更好的道具定位、面部纹理；同时新的数据库强化了跟踪模块，从而提升虚拟化身道具的表情响应度和精度。
 
 由于升级了底层数据表达，v2.0 版本下的道具将全面不兼容。我司制作的道具请联系我司获取升级之后的道具包。自行制作的道具请联系我司获取道具升级工具和技术支持。
 
@@ -90,43 +93,66 @@ static int g_items[2] = {0, 0};
 ```
 
 ## 视频美颜
-美颜功能实现步骤与道具类似，首先加载美颜道具，并将fuCreateItemFromPackage返回的值赋给g_items[1]:
+美颜功能实现步骤与道具类似，首先加载美颜道具，并将fuCreateItemFromPackage返回的美颜道具handle保存下来:
   
 ```C
 g_items[1] = fuCreateItemFromPackage(g_res_zip, (int)g_res_size);
 ```
 
-在调用fuRenderItems()前设置美颜相关参数:
+之后，将该handle和其他需要绘制的道具一起传入绘制接口即可。注意 fuRenderItems() 最后一个参数为所绘制的道具数量，这里以一个普通道具和一个美颜道具一起绘制为例。加载美颜道具后不需设置任何参数，即可启用默认设置的美颜的效果。
 
 ```C
-//  Set item parameters
-fuItemSetParamd(g_items[1], "color_level", 1.0);
-fuItemSetParams(g_items[1], "filter_name", g_filter_names[g_selected_filter]);
-fuItemSetParamd(g_items[1], "blur_radius", 8.0);
+fuRenderItems(0, img, stride/4, h, g_frame_id, g_items, 2);
 ```
 
-其中fuItemSetParamd为传参函数，可通过此函数来设置美颜程度、滤镜种类等相关参数。其中level为设置美颜程度参数，范围在0～1之间，数值越大美颜程度越强。filter_name为滤镜名称，主要包括下方这几种，可通过传入不同的滤镜名称来切换滤镜种类。这里需要注意的是：默认使用"nature"作为美白滤镜，而不在使用"none"作为默认滤镜。
+美颜道具主要包含四个模块的内容，滤镜，美白，磨皮，美型。每个模块可以调节的参数如下。
 
+#### 滤镜
+
+在目前版本中提供以下滤镜：
 ```C
 "nature", "delta", "electric", "slowlived", "tokyo", "warm"
 ```
 
-在滤镜为 `nature` 时，参数 `color_level` 控制美白的程度，其值为 1.0 时为默认美白的程度，大于 1.0 的参数值可以进一步强化美白效果。该参数也对其他滤镜有效，其设置方法如下：
+其中 "nature" 作为默认的美白滤镜，其他滤镜属于风格化滤镜。切换滤镜时，通过 fuItemSetParams 设置美颜道具的参数，如：
+```C
+//  Set item parameters - filter
+fuItemSetParams(g_items[1], "filter_name", "nature");
+```
+
+#### 美白
+
+当滤镜设置为美白滤镜 "nature" 时，通过参数 color_level 来控制美白程度。当滤镜为其他风格化滤镜时，该参数用于控制风格化程度。该参数取值为大于等于0的浮点数，0为无效果，1为默认效果，大于1为继续增强效果。
+
+设置参数的例子代码如下：
 
 ```C
+//  Set item parameters - whiten
 fuItemSetParamd(g_items[1], "color_level", 1.0);
 ```
 
-参数 `blur_radius` 控制美颜磨皮的程度，数值为磨皮滤波的半径。中等磨皮可以设置为 8.0 ，重度磨皮可以设置为 16.0:
+#### 磨皮
+
+新版美颜中磨皮的参数改为了一个复合参数 blur_level ，其取值范围为0-5，对应6个不同的磨皮程度。
+
+设置参数的例子代码如下：
 
 ```C
-fuItemSetParamd(g_items[1], "blur_radius", 8.0);
+//  Set item parameters - blur
+fuItemSetParamd(g_items[1], "blur_level", 5.0);
 ```
 
-最后，在调用fuRenderItems()接口时需要注意接口的最后一个参数。如果只开了道具或美颜，请将此参数设为1，如果同时开启了美颜和道具功能，请将此值设为2.
+如果对默认的6个磨皮等级不满意，想进一步自定义磨皮效果，可以联系我司获取内部参数调节的方式。
 
+#### 美型
+
+目前我们支持两种美型模式，瘦脸和大眼，分别由 cheek_thinning 和 eye_enlarging 控制效果的强弱。两个参数的取值都为大于等于0的浮点数，0为关闭效果，1为默认效果，大于1为进一步增强效果。
+
+设置参数的例子代码如下：
 ```C
-fuRenderItems(0, img, stride/4, h, g_frame_id, g_items, 2);
+//  Set item parameters - shaping
+fuItemSetParamd(g_items[1], "cheek_thinning", 1.0);
+fuItemSetParamd(g_items[1], "eye_enlarging", 1.0);
 ```
 
 ## OC封装层
@@ -206,11 +232,6 @@ static char g_auth_package[]={ ... }
 
 任何其他关于授权问题，请email：support@faceunity.com
 
-## 函数接口及参数说明
-### [3.0.2] - 2016-12-28
-1. 增强人脸识别稳定性
-
-```
 ## 函数接口及参数说明
 
 ```C
