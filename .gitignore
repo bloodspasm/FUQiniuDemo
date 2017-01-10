@@ -6,3 +6,9 @@ Example/.DS_Store
 *.xcuserstate
 
 Example/PLMediaStreamingKitDemo.xcworkspace/xcuserdata/ly.xcuserdatad/UserInterfaceState.xcuserstate
+
+*.xcscheme
+
+Example/PLMediaStreamingKitDemo.xcodeproj/xcuserdata/liuyang.xcuserdatad/xcschemes/xcschememanagement.plist
+
+Example/Pods/Pods.xcodeproj/xcuserdata/liuyang.xcuserdatad/xcschemes/xcschememanagement.plist
