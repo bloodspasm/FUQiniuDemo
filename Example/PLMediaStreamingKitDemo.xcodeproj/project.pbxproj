@@ -45,6 +45,7 @@
 		B62E2CD11D543AB2006E19E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B62E2CD01D543AB2006E19E6 /* main.m */; };
 		B62E2CD71D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B62E2CD51D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist */; };
 		B62E2CDA1D543AF8006E19E6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B62E2CD81D543AF8006E19E6 /* InfoPlist.strings */; };
+		CD6C891F1E3059C00051D660 /* heart.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CD6C891E1E3059C00051D660 /* heart.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,7 @@
 		B62E2CD61D543AE3006E19E6 /* PLMediaStreamingKitDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PLMediaStreamingKitDemo-Prefix.pch"; path = "PLMediaStreamingKit/PLMediaStreamingKitDemo-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		B62E2CD91D543AF8006E19E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = PLMediaStreamingKit/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
 		B8A06DB17A42B6A6EC21E6AF /* libPods-PLMediaStreamingKitDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PLMediaStreamingKitDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD6C891E1E3059C00051D660 /* heart.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = heart.bundle; sourceTree = "<group>"; };
 		CD6D534D1E23B49000007792 /* authpack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = authpack.h; sourceTree = "<group>"; };
 		DE7E497A43C319A16A6ACED9 /* Pods-PLMediaStreamingKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLMediaStreamingKitDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -159,6 +161,7 @@
 		0848C9C21E128AC000535018 /* faceunity */ = {
 			isa = PBXGroup;
 			children = (
+				CD6C891E1E3059C00051D660 /* heart.bundle */,
 				0848C9C41E128AC000535018 /* BeagleDog.bundle */,
 				0848C9C51E128AC000535018 /* ColorCrown.bundle */,
 				0848C9C61E128AC000535018 /* Deer.bundle */,
@@ -325,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0848C9E01E128AC000535018 /* item0208.bundle in Resources */,
+				CD6C891F1E3059C00051D660 /* heart.bundle in Resources */,
 				ADB2860D1DA1ED7E00436929 /* Default-568h.png in Resources */,
 				0848C9E51E128AC000535018 /* PrincessCrown.bundle in Resources */,
 				0848C9DF1E128AC000535018 /* item0204.bundle in Resources */,

@@ -233,9 +233,9 @@ static char* g_filter_names[] = {"nature", "delta", "electric", "slowlived", "to
 static NSString* g_item_hints[] = {@"", @"", @"", @"", @"嘴角向上以及嘴角向下", @"", @"", @"", @"", @"", @"", @"做咀嚼动作", @""}; // @"张开嘴巴"
 static const int g_item_num = sizeof(g_item_names) / sizeof(NSString*);
 static const int g_filter_num = sizeof(g_filter_names) / sizeof(char*);
-static void* g_mmap_pointers[g_item_num + 1] = {NULL};
-static intptr_t g_mmap_sizes[g_item_num + 1] = {0};
-static int g_items[2] = {0, 0};
+static void* g_mmap_pointers[g_item_num + 2] = {NULL};
+static intptr_t g_mmap_sizes[g_item_num + 2] = {0};
+static int g_items[3] = {0, 0, 0};
 static float g_beauty_level = 1.0;
 // Item loading assistant functions
 static size_t osal_GetFileSize(int fd){
@@ -308,6 +308,7 @@ static void* mmap_sharing_file(NSString* fn_file,intptr_t* psize){
     g_items[0] = fuCreateItemFromPackage(data, (int)size);
     NSLog(@"faceunity: load item #%d, handle=%d", g_selected_item, g_items[0]);
 }
+
 - (void)fuLoadBeautify{
     // load beautify item
     intptr_t size = g_mmap_sizes[g_item_num];
@@ -321,6 +322,21 @@ static void* mmap_sharing_file(NSString* fn_file,intptr_t* psize){
     // key item creation function call
     g_items[1] = fuCreateItemFromPackage(data, (int)size);
     NSLog(@"faceunity: load beautify item, handle=%d", g_items[1]);
+}
+
+- (void)fuLoadHeart{
+    // load beautify item
+    intptr_t size = g_mmap_sizes[g_item_num + 1];
+    void* data = g_mmap_pointers[g_item_num + 1];
+    if(!data){
+        // mmap doesn't consume much hard resources, it should be safe to keep all the pointers around
+        data = mmap_bundle(@"heart.bundle", &size);
+        g_mmap_pointers[g_item_num + 1] = data;
+        g_mmap_sizes[g_item_num + 1] = size;
+    }
+    // key item creation function call
+    g_items[2] = fuCreateItemFromPackage(data, (int)size);
+    NSLog(@"faceunity: load heart item, handle=%d", g_items[2]);
 }
 
 // Item draw interface with Qiniu pipeline
@@ -358,6 +374,10 @@ static void* mmap_sharing_file(NSString* fn_file,intptr_t* psize){
         [self fuLoadBeautify];
     }
     
+    if (g_items[2] == 0){
+        [self fuLoadHeart];
+    }
+    
     //  Update face tracking status
     int tracking = fuIsTracking();
     if (tracking != g_is_tracking){
@@ -379,7 +399,7 @@ static void* mmap_sharing_file(NSString* fn_file,intptr_t* psize){
     
     ////////////////////////////
     
-    pixelBuffer = [[FURenderer shareRenderer] renderPixelBuffer:pixelBuffer withFrameId:g_frame_id items:g_items itemCount:2];
+    pixelBuffer = [[FURenderer shareRenderer] renderPixelBuffer:pixelBuffer withFrameId:g_frame_id items:g_items itemCount:3];
     
     g_frame_id++;
     

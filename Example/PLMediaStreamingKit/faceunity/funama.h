@@ -132,6 +132,8 @@ FUNAMA_API void fuDestroyItem(int item);
 	This function MUST be called in the same GLES context / thread as the original fuCreateItemFromPackage.
 */
 FUNAMA_API void fuDestroyAllItems();
+
+FUNAMA_API void fuClearRenderData();
 /**
 \brief Render a list of items on top of a GLES texture or a memory buffer.
 	This function needs a GLES 2.0+ context.
@@ -168,6 +170,13 @@ FUNAMA_API int fuRenderItemsEx(
 	int out_format,void* out_ptr,
 	int in_format,void* in_ptr,
 	int w,int h,int frame_id, int* p_items,int n_items);
+
+/**************************************************************
+The set / get functions do not make sense on their own. Refer to
+the documentation of specific items for their get/set-able
+parameters. Most items do not have any.
+**************************************************************/
+
 /**
 \brief Set an item parameter to a double value
 \param item specifies the item
@@ -209,6 +218,7 @@ FUNAMA_API double fuItemGetParamd(int item,char* name);
 \return the length of the string value, or -1 if the parameter is not a string.
 */
 FUNAMA_API int fuItemGetParams(int item,char* name,char* buf,int sz);
+
 /**
 \brief Turn off the camera
 */
