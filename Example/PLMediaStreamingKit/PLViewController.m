@@ -393,9 +393,12 @@ static void* mmap_sharing_file(NSString* fn_file,intptr_t* psize){
         }
     }
     //  Set item parameters
-    fuItemSetParamd(g_items[1], "color_level", 1.0);
-    fuItemSetParams(g_items[1], "filter_name", g_filter_names[g_selected_filter]);
-    fuItemSetParamd(g_items[1], "blur_level", g_beauty_level * 5);
+    //设置美颜效果（滤镜、磨皮、美白、瘦脸、大眼....）
+    fuItemSetParamd(g_items[1], "cheek_thinning", 1); //瘦脸
+    fuItemSetParamd(g_items[1], "eye_enlarging", 2); //大眼
+    fuItemSetParamd(g_items[1], "color_level", 0.5); //美白
+    fuItemSetParams(g_items[1], "filter_name", g_filter_names[g_selected_filter]); //滤镜
+    fuItemSetParamd(g_items[1], "blur_level", g_beauty_level * 6); //磨皮
     
     ////////////////////////////
     
