@@ -18,7 +18,6 @@
 		0848C9D81E128AC000535018 /* BeagleDog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9C41E128AC000535018 /* BeagleDog.bundle */; };
 		0848C9D91E128AC000535018 /* ColorCrown.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9C51E128AC000535018 /* ColorCrown.bundle */; };
 		0848C9DA1E128AC000535018 /* Deer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9C61E128AC000535018 /* Deer.bundle */; };
-		0848C9DB1E128AC000535018 /* einstein.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9C71E128AC000535018 /* einstein.bundle */; };
 		0848C9DC1E128AC000535018 /* face_beautification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9C81E128AC000535018 /* face_beautification.bundle */; };
 		0848C9DD1E128AC000535018 /* HappyRabbi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9CB1E128AC000535018 /* HappyRabbi.bundle */; };
 		0848C9DE1E128AC000535018 /* hartshorn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0848C9CC1E128AC000535018 /* hartshorn.bundle */; };
@@ -45,6 +44,7 @@
 		B62E2CD11D543AB2006E19E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B62E2CD01D543AB2006E19E6 /* main.m */; };
 		B62E2CD71D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B62E2CD51D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist */; };
 		B62E2CDA1D543AF8006E19E6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B62E2CD81D543AF8006E19E6 /* InfoPlist.strings */; };
+		CD0A09271E5D6746000FC2C3 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD0A09261E5D6746000FC2C3 /* Accelerate.framework */; };
 		CD6C891F1E3059C00051D660 /* heart.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CD6C891E1E3059C00051D660 /* heart.bundle */; };
 /* End PBXBuildFile section */
 
@@ -73,7 +73,6 @@
 		0848C9C41E128AC000535018 /* BeagleDog.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = BeagleDog.bundle; sourceTree = "<group>"; };
 		0848C9C51E128AC000535018 /* ColorCrown.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = ColorCrown.bundle; sourceTree = "<group>"; };
 		0848C9C61E128AC000535018 /* Deer.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = Deer.bundle; sourceTree = "<group>"; };
-		0848C9C71E128AC000535018 /* einstein.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = einstein.bundle; sourceTree = "<group>"; };
 		0848C9C81E128AC000535018 /* face_beautification.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = face_beautification.bundle; sourceTree = "<group>"; };
 		0848C9C91E128AC000535018 /* funama.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = funama.h; sourceTree = "<group>"; };
 		0848C9CA1E128AC000535018 /* FURenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FURenderer.h; sourceTree = "<group>"; };
@@ -104,6 +103,7 @@
 		B62E2CD61D543AE3006E19E6 /* PLMediaStreamingKitDemo-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PLMediaStreamingKitDemo-Prefix.pch"; path = "PLMediaStreamingKit/PLMediaStreamingKitDemo-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		B62E2CD91D543AF8006E19E6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = PLMediaStreamingKit/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
 		B8A06DB17A42B6A6EC21E6AF /* libPods-PLMediaStreamingKitDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PLMediaStreamingKitDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD0A09261E5D6746000FC2C3 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		CD6C891E1E3059C00051D660 /* heart.bundle */ = {isa = PBXFileReference; lastKnownFileType = file; path = heart.bundle; sourceTree = "<group>"; };
 		CD6D534D1E23B49000007792 /* authpack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = authpack.h; sourceTree = "<group>"; };
 		DE7E497A43C319A16A6ACED9 /* Pods-PLMediaStreamingKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PLMediaStreamingKitDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-PLMediaStreamingKitDemo/Pods-PLMediaStreamingKitDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -114,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD0A09271E5D6746000FC2C3 /* Accelerate.framework in Frameworks */,
 				769750EF1A6331080079423B /* VideoToolbox.framework in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				0848C9E31E128AC000535018 /* libnama.a in Frameworks */,
@@ -165,7 +166,6 @@
 				0848C9C41E128AC000535018 /* BeagleDog.bundle */,
 				0848C9C51E128AC000535018 /* ColorCrown.bundle */,
 				0848C9C61E128AC000535018 /* Deer.bundle */,
-				0848C9C71E128AC000535018 /* einstein.bundle */,
 				0848C9C81E128AC000535018 /* face_beautification.bundle */,
 				0848C9C91E128AC000535018 /* funama.h */,
 				0848C9CA1E128AC000535018 /* FURenderer.h */,
@@ -217,6 +217,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CD0A09261E5D6746000FC2C3 /* Accelerate.framework */,
 				769750EC1A6329DC0079423B /* VideoToolbox.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
@@ -352,7 +353,6 @@
 				0848C9E61E128AC000535018 /* tiara.bundle in Resources */,
 				0848C9E71E128AC000535018 /* v3.bundle in Resources */,
 				0848C9D91E128AC000535018 /* ColorCrown.bundle in Resources */,
-				0848C9DB1E128AC000535018 /* einstein.bundle in Resources */,
 				B62E2CD71D543AE3006E19E6 /* PLMediaStreamingKitDemo-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
