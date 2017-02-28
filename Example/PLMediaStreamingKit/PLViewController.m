@@ -357,6 +357,9 @@ static void* mmap_sharing_file(NSString* fn_file,intptr_t* psize){
     	void* v3data = mmap_bundle(@"v3.bundle", &size);
 
         [[FURenderer shareRenderer] setupWithData:v3data ardata:NULL authPackage:g_auth_package authSize:sizeof(g_auth_package)];
+        
+        //开启多脸识别（最高可设为8，不过考虑到性能问题建议设为4以内）
+        fuSetMaxFaces(4);
     }
     //  Reset if camera change
     if (g_reset_camera){
@@ -373,10 +376,10 @@ static void* mmap_sharing_file(NSString* fn_file,intptr_t* psize){
     if (g_items[1] == 0){
         [self fuLoadBeautify];
     }
-    
-    if (g_items[2] == 0){
-        [self fuLoadHeart];
-    }
+    #warning 如果需开启手势检测，请打开下方的注释
+//    if (g_items[2] == 0){
+//        [self fuLoadHeart];
+//    }
     
     //  Update face tracking status
     int tracking = fuIsTracking();
