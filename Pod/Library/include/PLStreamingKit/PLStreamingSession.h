@@ -108,6 +108,10 @@
 
     @since      v1.0.0
  */
+
+typedef void (^PLStreamDiagnosisResultHandler)(NSString * _Nullable diagnosisResult);
+
+
 @interface PLStreamingSession : NSObject
 
 /*!
@@ -579,6 +583,26 @@
  */
 - (void)pushAudioSampleBuffer:(CMSampleBufferRef)sampleBuffer completion:(void (^)(BOOL success))handler;
 
+/*!
+ @method     pushAudioSampleBuffer:completion:
+ @abstract   发送音频 CMSampleBufferRef 数据。
+ 
+ @param      sampleBuffer 待发送的音频 CMSampleBufferRef 数据
+ @param      channelID 音频流的来源频道，目前提供 kPLAudioChannelDefault|kPLAudioChannelApp|kPLAudioChannelMic 三个频道
+ @param      handler 在编码 sampleBuffer 数据完成时的回调 block, 带是否编码成功的参数 success
+ 
+ @discussion 若不确定该采用何种 channelID，请直接调用 -pushAudioSampleBuffer: 或 -pushAudioSampleBuffer:completion: 方法。目前只针对ReplayKit支持两路音频的混音，暂不支持自定义音频来源。kPLAudioChannelApp会采用强制大端序的音频数据，kPLAudioChannelMic会采用强制小端序的音频数据。请使用某个 ChannelID 前，应将其注册到 PLAudioStreamingConfiguration 的 inputAudioChannelDescriptions 属性中，例如两路音频合流，应传入 @[kPLAudioChannelApp, kPLAudioChannelMic] 数组。否则未注册的 ChannelID 数据将被丢弃!
+ 
+ @discussion 如果你期望在调用完该方法后还要对 sampleBuffer 做操作，请调用该方法，并在 handler block 中完成操作。调用 -pushAudioSampleBuffer: 相当于调用该方法并以 nil 作为 handler 参数。
+ 
+ @warning    该方法的 handler 回调并不在主线程，也不在 delegateQueue 线程，所以除了对 sampleBuffer 做 unlock 或者销毁等操作，务必不要做额外高计算量的操作，或者长时间让 handler 无法结束运行。
+ @see        pushAudioSampleBuffer:
+ @see        pushAudioBuffer:
+ @see        pushAudioBuffer:completion:
+ 
+ @since      @v1.2.5
+ */
+- (void)pushAudioSampleBuffer:(CMSampleBufferRef)sampleBuffer withChannelID:(const NSString *)channelID completion:(void (^)(BOOL success))handler;
 
 ///------------------
 /// @name 发送音频数据
@@ -620,17 +644,31 @@
  */
 - (void)pushAudioBuffer:(AudioBuffer *)audioBuffer asbd:(const AudioStreamBasicDescription *)asbd completion:(void (^)(BOOL success))handler;
 
+/**
+ *  截图
+ *  @param handle 类型 PLStreamScreenshotHandler block 。
+ *
+ *  @discussion 截图操作为异步，完成后将通过 handler 回调返回 UIImage 类型图片数据。
+ *
+ *  @since v2.2.0
+ *
+ */
+- (void)getScreenshotWithCompletionHandler:(nullable PLStreamScreenshotHandler)handler;
+
+/**
+ *  人工报障
+ *
+ *  @discussion 在出现特别卡顿的时候，可以调用次信息，上报故障。
+ *
+ *
+ *  @since v2.2.1
+ *
+ */
+- (void)postDiagnosisWithCompletionHandler:(nullable PLStreamDiagnosisResultHandler)handle;
+
 @end
 
 #pragma mark - Category (Network)
-
-///-------------------------------
-/// @name   网络操作相关的参数与操作
-///-------------------------------
-
-typedef BOOL(^ConnectionChangeActionCallback)(PLNetworkStateTransition transition);
-
-typedef BOOL(^ConnectionInterruptionHandler)(NSError *error);
 
 /*!
     @category   PLStreamingSession (Network)
@@ -673,6 +711,72 @@ typedef BOOL(^ConnectionInterruptionHandler)(NSError *error);
      @see        connectionInterruptionHandler
  */
 @property (nonatomic, assign, getter=isAutoReconnectEnable) BOOL autoReconnectEnable;
+
+/*!
+     @property    adaptiveQualityMode
+     @abstract    自适应质量(码率/帧率)控制模式
+     
+     @discussion  提供码率调整优先、帧率调整优先以及混合调整三种模式，只有在同时打开自适应码率开关 (enableAdaptiveBitrateControlWithMinVideoBitRate:) 以及动态帧率开关 (dynamicFrameEnable) 时，该模式才起到控制作用。默认为混合调整模式，即弱网时同时调节帧率跟码率。
+     @see         PLStreamAdaptiveQualityMode
+ */
+@property (nonatomic, assign) PLStreamAdaptiveQualityMode adaptiveQualityMode;
+
+/*!
+ @method     enableAdaptiveBitrateControlWithMinVideoBitRate:minVideoBitRate:
+ @abstract   开启自适应码率调节功能
+ 
+ @param      minVideoBitRate 最小平均码率
+ 
+ @discussion 该方法在推流SDK内部实现动态码率调节。开启该机制时，需设置允许调节的最低码率，以便使自动调整后的码率不会低于该范围。该机制根据网络吞吐量来调节推流的码率，在网络带宽变小导致发送缓冲区数据持续增长时，SDK内部将适当降低推流码率，若情况得不到改善，则会重复该过程直至平均码率降至用户设置的最低值；反之，当一段时间内网络带宽充裕，SDK将适当增加推流码率，直至达到预设的推流码率。
+ 自适应码率机制默认关闭，用户可利用 -streamingSession:streamStatusDidUpdate 回调数据实现自定义版本的码率调节功能。
+ */
+- (void)enableAdaptiveBitrateControlWithMinVideoBitRate:(NSUInteger)minVideoBitRate;
+
+/*!
+    @method     disableAdaptiveBitrateControl
+    @abstract   关闭自适应码率调节功能，默认即为关闭状态
+ */
+- (void)disableAdaptiveBitrateControl;
+
+/*!
+     @property   connectionInterruptionHandler
+     @abstract   推流断开用户回调
+ 
+     @discussion 该回调函数传入参数为推流断开产生的错误信息 error。返回值为布尔值，YES表示在该错误状态下允许推流自动重连，NO则代表不允许自动重连。本回调函数与 autoReconnectEnable 开关配合作用，只有在该开关开启时，本回调会在自动重连之前被调用，并通过返回值判断是否继续自动重连。若用户未设置该回调方法，则按默认策略最多进行三次自动重连。
+ 
+     @warning    该回调会在主线程中执行
+ 
+     @see        autoReconnectEnable
+ */
+@property (nonatomic, copy) _Nullable ConnectionInterruptionHandler connectionInterruptionHandler;
+
+/*!
+ @property   connectionChangeActionCallback
+ @abstract   网络切换用户回调
+ 
+ @discussion 该回调函数与 monitorNetworkStateEnable 开关配合作用，只有将该开关开启时，该回调才会执行。该回调函数传入参数为当前网络的切换状态 PLNetworkStateTransition。返回值为布尔值，YES 表示在某种切换状态下允许推流自动重启，NO 则代表该状态下不应自动重启。该回调与自动重连回调 connectionInterruptionHandler 的区别在于，当推流网络从 WWAN 切换到 WiFi 时，推流不会被断开而继续使用 WWAN，此时自动重连机制不会被触发，SDK 内部会调用 connectionChangeActionCallback 来判断是否需要重启推流以使用优先级更高的网络。值得注意的是，在开启自动重连开关 autoReconnectEnable，并实现了本回调的情况下，推流时网络从 WiFi 切换到 WWAN，SDK 将优先执行本回调函数判断是否主动重启推流。如果用户选择在此情况下不主动重启，则等推流连接超时后将自动重连决定权交予 connectionInterruptionHandler 判断。如果两个回调均未被实现，则该情况下会默认断开推流以防止用户流量消耗。
+ 
+ @warning    该回调会在主线程中执行
+ 
+ @see        monitorNetworkStateEnable
+ @see        connectionInterruptionHandler
+ */
+@property (nonatomic, copy) _Nullable ConnectionChangeActionCallback connectionChangeActionCallback;
+
+/*!
+ @property   dynamicFrameEnable
+ @abstract   开启动态帧率功能，自动调整的最大帧率不超过 videoStreamingConfiguration.expectedSourceVideoFrameRate。该功能默认为关闭状态。
+ */
+@property (nonatomic, assign, getter=isDynamicFrameEnable) BOOL dynamicFrameEnable;
+
+/*!
+ @property   monitorNetworkStateEnable
+ @abstract   开启网络切换监测，默认处于关闭状态
+ 
+ @discussion 打开该开关后，需实现回调函数 connectionChangeActionCallback，以完成在某种网络切换状态下对推流连接的处理判断。
+ @see        connectionChangeActionCallback
+ */
+@property (nonatomic, assign, getter=isMonitorNetworkStateEnable) BOOL monitorNetworkStateEnable;
 
 @end
 
@@ -729,6 +833,26 @@ typedef BOOL(^ConnectionInterruptionHandler)(NSError *error);
 
 @end
 
+#pragma mark - Category (Processing)
+
+/*!
+ @category   PLStreamingSession (Processing)
+ @abstract   PLStreamingSession 数据处理相关接口
+ 
+ @since      v2.1.2
+ */
+@interface PLStreamingSession (Processing)
+
+/*!
+ @property   denoiseOn
+ @abstract   是否开启降噪功能。
+ 
+ @see        v2.1.2
+ */
+@property (nonatomic, assign, getter=isDenoiseOn) BOOL denoiseOn;
+
+@end
+
 #pragma mark - Categroy (Application)
 
 ///------------------
@@ -754,7 +878,6 @@ typedef BOOL(^ConnectionInterruptionHandler)(NSError *error);
 @property (nonatomic, assign, getter=isIdleTimerDisable) BOOL  idleTimerDisable;   // default as YES.
 
 @end
-
 
 #pragma mark - Category (Info)
 

@@ -1,26 +1,10 @@
-# FUQiniuDemo
+# FUPLMSKitDemo
 
-FUQiniuDemo 是 Faceunity 的面部跟踪和虚拟道具功能在 PLMediaStreamingKit 中的集成。PLMediaStreamingKit 是一个适用于 iOS 的 RTMP 直播推流 SDK，原版文档可以参考[这里](https://github.com/pili-engineering/PLMediaStreamingKit/blob/master/README.md)。
-
-## v3.2 爱心手势识别
-在v3.2中加入了爱心手势识别，用户比出爱心手势，可以触发特定的道具动效。目前线上提供了一个简单的演示用手势道具，自定义手势道具的流程和2D道具制作一致，具体打包的细节可以联系我司技术支持。
-
-手势识别的技术细节参见[这里](https://github.com/Faceunity/FUQiniuDemo#手势识别)。
-
-## v3.1 美颜更新
-在v3.1中，全面更新了美颜的功能和效果。改进了磨皮算法，使得在细腻皮肤的同时充分保持皮肤的细节，减少涂抹感。增加智能美型功能，可以自然地实现瘦脸和大眼效果，并可根据需要进行调节。
-
-美颜的加载及参数调节参见[这里](https://github.com/Faceunity/FUQiniuDemo#视频美颜)。
-
-## v3.0 重要更新
-在v3.0中，全面升级了底层人脸数据库，数据库大小从原来的 10M 缩小到 3M ，同时取消了之前的 ar.mp3 数据。新的数据库可以支持稳定的全头模型，从而支持更好的道具定位、面部纹理；同时新的数据库强化了跟踪模块，从而提升虚拟化身道具的表情响应度和精度。
-
-由于升级了底层数据表达，v2.0 版本下的道具将全面不兼容。我司制作的道具请联系我司获取升级之后的道具包。自行制作的道具请联系我司获取道具升级工具和技术支持。
-
-v2.0 版本的系统仍然保留在 v2 分支中，但不再进行更新。
+FUPLMSKitDemo 是集成了 Faceunity 面部跟踪和虚拟道具功能 和七牛连麦直播功能的 Demo。
 
 ## 库文件
   - funama.h 函数调用接口头文件
+  - FURenderer.h OC接口头文件
   - libnama.a 人脸跟踪及道具绘制核心库    
   
 ## 数据文件
@@ -28,144 +12,325 @@ v2.0 版本的系统仍然保留在 v2 分支中，但不再进行更新。
 
 其中 v3.bundle 是所有道具共用的数据文件，缺少该文件会导致初始化失败。其他每一个文件对应一个道具。自定义道具制作的文档和工具请联系我司获取。
   
-## 集成方法
-首先把库文件拷贝到工程目录中，并添加到 xcode 工程，之后在代码中包含 funama.h 即可调用相关函数。
-
-```C
-#import "funama.h"
-```
-
-调用时，首先要创建一个openGL context:
-
-```C
-EAGLContext* g_gl_context [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-[EAGLContext setCurrentContext:g_gl_context];
-
-```
-
-然后对 faceunity 环境进行初始化。其中 g_auth_package 为密钥数组，没有密钥的话则传入 null 进行测试。
-
-```C
-intptr_t size = 0;
-void* v3data = [self mmap_bundle:@"v3" psize:&size];
-fuSetup(v3data, NULL, g_auth_package, sizeof(g_auth_package));
-```
-
-在 AVCaptureVideoDataOutputSampleBufferDelegate 的 cameraSourceDidGetPixelBuffer 回调接口中调用道具绘制函数进行绘制:
-
-```C
-static int g_frame_id = 0;
-static int g_items[2] = {0, 0};
-
-- (void *)mmap_bundle:(NSString*) fn_bundle psize:(intptr_t*)psize
-{
-    // Load item from predefined item bundle
-    NSString *str = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:[fn_bundle stringByAppendingString:@".bundle"]];
-    const char *fn = [str UTF8String];
-    int fd = open(fn,O_RDONLY);
-    void* g_res_zip = NULL;
-    size_t g_res_size = 0;
-    if(fd == -1){
-        NSLog(@"faceunity: failed to open bundle");
-        g_res_size = 0;
-    }else{
-        g_res_size = [FaceUnity osal_GetFileSize:fd];
-        g_res_zip = mmap(NULL, g_res_size, PROT_READ, MAP_SHARED, fd, 0);
-        NSLog(@"faceunity: %@ mapped %08x %ld\n", str, (unsigned int)g_res_zip, g_res_size);
-    }
-    *psize = g_res_size;
-    return g_res_zip;
-}
-
-- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
-{
   
-  if (!g_items[0])
-  {
-    intptr_t size = 0;    
-    void* data = [self mmap_bundle:@"XXXX.bundle" psize:&size];    
-    // key item creation function call
-        g_items[0] = fuCreateItemFromPackage(data, (int)size);
-  }
+## 注意
+**本例为示例 Demo ， FaceUnity 美颜和道具效果仅存在于 (PLMediaStreamingKitDemo) 下的 主播和副主播 选项内，用户可根据本文档及示例代码自行选择集成。**
+  
+  
+## 集成方法
 
-    CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);    
-    CVPixelBufferLockBaseAddress(pixelBuffer, 0);    
-    int h = (int)CVPixelBufferGetHeight(pixelBuffer);        
-    int stride = (int)CVPixelBufferGetBytesPerRow(pixelBuffer);        
-    int* img = (int*)CVPixelBufferGetBaseAddress(pixelBuffer);        
-    fuRenderItems(0, img, stride/4, h, g_frame_id, g_items, 1);        
-    CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);    
-    g_frame_id++;
-}
+首先参照 PLMediaStreamingKit 集成 七牛连麦功能，具体集成方法参照 [七牛连麦SDK开发文档](https://developer.qiniu.com/pili/sdk/1639/PLMediaStreamingKit-RTC)
+
+**首先需要获取采集到的视频数据**
+
+集成七牛连麦SDK之后 重写 `PLMediaStreamingSessionDelegate`  代理中的 
+`- (CVPixelBufferRef)mediaStreamingSession:(PLMediaStreamingSession *)session cameraSourceDidGetPixelBuffer:(CVPixelBufferRef)pixelBuffer;` 方法即可获取原始视频数据，在此方法中加入 `FaceUnity` 的美颜和贴纸效果。
+
+**FaceUnity 的接入**
+
+然后将 FUPLMSKitDemo 中的 SDK 文件夹（Faceunity）拖入到项目中，并勾选上 Destination。
+
+然后向Build Phases → Link Binary With Libraries 中添加依赖库，这里只需要添加Accelerate.framework一个库即可
+
+之后在代码中包含 FURenderer.h 即可调用相关函数。
+
+```C
+#import "FURenderer.h"
 ```
+
+### 在本例中，以下代码均封装在 FUManager 类当中
+
+**首先Faceunity初始化： 其中 g_auth_package 为密钥数组，必须配置好密钥，SDK才能正常工作。注：app启动后只需要初始化一次Faceunity即可，切勿多次初始化。**
+
+```C
+[FUManager shareManager];
+```
+
+```C
+
++ (FUManager *)shareManager
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        shareManager = [[FUManager alloc] init];
+    });
+    
+    return shareManager;
+}
+
+- (instancetype)init
+{
+    if (self = [super init]) {
+        
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"v3.bundle" ofType:nil];
+        
+        /**这里新增了一个参数shouldCreateContext，设为YES的话，不用在外部设置context操作，我们会在内部创建并持有一个context。
+         还有设置为YES,则需要调用FURenderer.h中的接口，不能再调用funama.h中的接口。*/
+        [[FURenderer shareRenderer] setupWithDataPath:path authPackage:&g_auth_package authSize:sizeof(g_auth_package) shouldCreateContext:YES];
+        
+        /*设置贴纸和美颜的默认参数*/
+        self.itemsDataSource = @[@"noitem", @"yuguan", @"yazui", @"mask_matianyu", @"lixiaolong", @"EatRabbi", @"Mood"];
+        self.filtersDataSource = @[@"nature", @"delta", @"electric", @"slowlived", @"tokyo", @"warm"];
+        
+        // 美颜的默认参数
+        [self setDefaultBeautyParameters];
+    }
+    
+    return self;
+}
+
+```
+
+**加载道具：** 声明一个int数组，将fuCreateItemFromPackage返回的道具handle保存下来， 在需要加载 FaceUnity 道具的页面调用如下方法 加载道具和美颜效果
+
+```C
+
+// 初次加载 FaceUnity 的时候，设置默认参数
+[[FUManager shareManager] loadItems];
+
+
+ // 加载贴纸道具 
+[[FUManager shareManager] loadItem:item];
+// 加载美颜效果
+[[FUManager shareManager] loadFilter];
+```
+
+
+```C
+int items[2];
+
+#pragma -Faceunity Load Data
+/**
+ 加载普通道具
+ - 先创建再释放可以有效缓解切换道具卡顿问题
+ */
+- (void)loadItem:(NSString *)itemName
+{
+    /**如果取消了道具的选择，直接销毁道具*/
+    if ([itemName isEqual: @"noitem"] || itemName == nil)
+    {
+        if (items[0] != 0) {
+            
+            NSLog(@"faceunity: destroy item");
+            [FURenderer destroyItem:items[0]];
+            
+            /**为避免道具句柄被销毁会后仍被使用导致程序出错，这里需要将存放道具句柄的items[0]设为0*/
+            items[0] = 0;
+        }
+        
+        return;
+    }
+    
+    /**先创建道具句柄*/
+    NSString *path = [[NSBundle mainBundle] pathForResource:[itemName stringByAppendingString:@".bundle"] ofType:nil];
+    int itemHandle = [FURenderer itemWithContentsOfFile:path];
+    
+    /**销毁老的道具句柄*/
+    if (items[0] != 0) {
+        NSLog(@"faceunity: destroy item");
+        [FURenderer destroyItem:items[0]];
+    }
+    
+    /**将刚刚创建的句柄存放在items[0]中*/
+    items[0] = itemHandle;
+    
+    NSLog(@"faceunity: load item");
+}
+
+/**加载美颜道具*/
+- (void)loadFilter
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"face_beautification.bundle" ofType:nil];
+    
+    items[1] = [FURenderer itemWithContentsOfFile:path];
+}
+
+```
+**道具绘制：** 调用renderPixelBuffer函数进行道具绘制，其中frameID用来记录当前处理了多少帧图像，该参数与道具中的动画播放有关。itemCount为传入接口的道具数量，flipx设为YES可以使道具做水平镜像操作。
+
+```C
+
+[[FUManager shareManager] renderItemsToPixelBuffer:pixelBuffer];
+```
+ 
+ 
+```C 
+/**将道具绘制到pixelBuffer*/
+- (void)renderItemsToPixelBuffer:(CVPixelBufferRef)pixelBuffer
+{
+    /**设置美颜参数*/
+    [self setBeautyParams];
+    
+    /*Faceunity核心接口，将道具及美颜效果绘制到pixelBuffer中，执行完此函数后pixelBuffer即包含美颜及贴纸效果*/
+    [[FURenderer shareRenderer] renderPixelBuffer:pixelBuffer withFrameId:frameID items:items itemCount:3 flipx:self.itemsMirrored];//flipx 参数设为YES可以使道具做水平方向的镜像翻转
+    
+    frameID += 1;
+}
+
+
+/**设置美颜参数*/
+- (void)setBeautyParams
+{
+    /*设置美颜效果（滤镜、磨皮、美白、红润、瘦脸、大眼....）*/
+    [FURenderer itemSetParam:items[1] withName:@"filter_name" value:self.selectedFilter]; //滤镜名称
+    [FURenderer itemSetParam:items[1] withName:@"blur_level" value:@(self.selectedBlur)]; //磨皮 (0、1、2、3、4、5、6)
+    [FURenderer itemSetParam:items[1] withName:@"color_level" value:@(self.beautyLevel)]; //美白 (0~1)
+    [FURenderer itemSetParam:items[1] withName:@"red_level" value:@(self.redLevel)]; //红润 (0~1)
+    [FURenderer itemSetParam:items[1] withName:@"face_shape" value:@(self.faceShape)]; //美型类型 (0、1、2、3) 默认：3，女神：0，网红：1，自然：2
+    [FURenderer itemSetParam:items[1] withName:@"face_shape_level" value:@(self.faceShapeLevel)]; //美型等级 (0~1)
+    [FURenderer itemSetParam:items[1] withName:@"eye_enlarging" value:@(self.enlargingLevel)]; //大眼 (0~1)
+    [FURenderer itemSetParam:items[1] withName:@"cheek_thinning" value:@(self.thinningLevel)]; //瘦脸 (0~1)
+    
+}
+
+```
+
+**道具销毁：** 在页面退出时需要销毁道具 清理内存
+
+销毁全部道具：
+
+```C
+/**销毁全部道具*/
+- (void)destoryItems;
+```
+
+销毁全部道具：
+
+```C
+/**销毁全部道具*/
+- (void)destoryItems
+{
+    [FURenderer destroyAllItems];
+    
+    /**销毁道具后，为保证被销毁的句柄不再被使用，需要将int数组中的元素都设为0*/
+    for (int i = 0; i < sizeof(items) / sizeof(int); i++) {
+        items[i] = 0;
+    }
+    
+    /**销毁道具后，清除context缓存*/
+    fuOnDeviceLost();
+    
+    /**销毁道具后，重置人脸检测*/
+    [FURenderer onCameraChange];
+    
+    /**美颜参数设置为初始默认值*/
+    [self setDefaultBeautyParameters];
+}
+
+```
+这里需要注意的是，以上两个接口都需要和fuCreateItemFromPackage在同一个context线程上调用
 
 ## 视频美颜
-美颜功能实现步骤与道具类似，首先加载美颜道具，并将fuCreateItemFromPackage返回的美颜道具handle保存下来:
+美颜功能实现步骤与道具类似，首先加载美颜道具，并将 [FURenderer createItemFromPackage: size:] 返回的美颜道具handle保存下来:
   
 ```C
-g_items[1] = fuCreateItemFromPackage(g_res_zip, (int)g_res_size);
+- (void)loadFilter
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"face_beautification.bundle" ofType:nil];
+    
+    items[1] = [FURenderer itemWithContentsOfFile:path];
+}
 ```
 
 之后，将该handle和其他需要绘制的道具一起传入绘制接口即可。注意 fuRenderItems() 最后一个参数为所绘制的道具数量，这里以一个普通道具和一个美颜道具一起绘制为例。加载美颜道具后不需设置任何参数，即可启用默认设置的美颜的效果。
 
 ```C
-fuRenderItems(0, img, stride/4, h, g_frame_id, g_items, 2);
+[[FURenderer shareRenderer] renderPixelBuffer:pixelBuffer withFrameId:frameID items:items itemCount:2 flipx:YES];
 ```
 
-美颜道具主要包含四个模块的内容，滤镜，美白，磨皮，美型。每个模块可以调节的参数如下。
+美颜道具主要包含五个模块的内容，滤镜，美白和红润，磨皮，美型。每个模块可以调节的参数如下。
 
-#### 滤镜
+## 滤镜
 
 在目前版本中提供以下滤镜：
 ```C
 "nature", "delta", "electric", "slowlived", "tokyo", "warm"
 ```
 
-其中 "nature" 作为默认的美白滤镜，其他滤镜属于风格化滤镜。切换滤镜时，通过 fuItemSetParams 设置美颜道具的参数，如：
+其中 "nature" 作为默认的美白滤镜，其他滤镜属于风格化滤镜。滤镜由参数 filter_name 指定。切换滤镜时，通过 [FURenderer itemSetParam: withName: value:]; 设置美颜道具的参数，如：
 ```C
 //  Set item parameters - filter
-fuItemSetParams(g_items[1], "filter_name", "nature");
+[FURenderer itemSetParam:items[1] withName:@"filter_name" value:@"nature"];
 ```
 
-#### 美白
+## 美白和红润
 
-当滤镜设置为美白滤镜 "nature" 时，通过参数 color_level 来控制美白程度。当滤镜为其他风格化滤镜时，该参数用于控制风格化程度。该参数取值为大于等于0的浮点数，0为无效果，1为默认效果，大于1为继续增强效果。
+通过参数 color_level 来控制美白程度。该参数的推荐取值范围为[0, 1]，0为无效果，0.5为默认效果，大于1为继续增强效果。
 
 设置参数的例子代码如下：
 
 ```C
 //  Set item parameters - whiten
-fuItemSetParamd(g_items[1], "color_level", 1.0);
+[FURenderer itemSetParam:items[1] withName:@"color_level" value:@(0.5)];
 ```
 
-#### 磨皮
+新版美颜新增红润调整功能。参数名为 red_level 来控制红润程度。使用方法基本与美白效果一样。该参数的推荐取值范围为[0, 1]，0为无效果，0.5为默认效果，大于1为继续增强效果。
 
-新版美颜中磨皮的参数改为了一个复合参数 blur_level ，其取值范围为0-6，对应7个不同的磨皮程度。
+## 磨皮
+
+新版美颜中，控制磨皮的参数有两个：blur_level、use_old_blur。
+
+参数 blur_level 指定磨皮程度。该参数的推荐取值范围为[0, 6]，0为无效果，对应7个不同的磨皮程度。
+
+参数 use_old_blur 指定是否使用旧磨皮。该参数设置为0即使用新磨皮，设置为大于0即使用旧磨皮
 
 设置参数的例子代码如下：
 
 ```C
 //  Set item parameters - blur
-fuItemSetParamd(g_items[1], "blur_level", 6.0);
+//  Set item parameters - blur
+[FURenderer itemSetParam:items[1] withName:@"blur_level" value:@(6.0)];
+//  Set item parameters - use old blur
+[FURenderer itemSetParam:items[1] withName:@"use_old_blur" value:@(1.0)];
 ```
 
-如果对默认的7个磨皮等级不满意，想进一步自定义磨皮效果，可以联系我司获取内部参数调节的方式。
+## 美型
 
-#### 美型
+目前我们支持四种基本脸型：女神、网红、自然、默认。由参数 face_shape 指定：默认（3）、女神（0）、网红（1）、自然（2）。
 
-目前我们支持两种美型模式，瘦脸和大眼，分别由 cheek_thinning 和 eye_enlarging 控制效果的强弱。两个参数的取值都为大于等于0的浮点数，0为关闭效果，1为默认效果，大于1为进一步增强效果。
-
-设置参数的例子代码如下：
 ```C
 //  Set item parameters - shaping
-fuItemSetParamd(g_items[1], "cheek_thinning", 1.0);
-fuItemSetParamd(g_items[1], "eye_enlarging", 1.0);
+[FURenderer itemSetParam:items[1] withName:@"face_shape" value:@(3.0)];
+```
+
+在上述四种基本脸型的基础上，我们提供了以下三个参数：face_shape_level、eye_enlarging、cheek_thinning。
+
+参数 face_shape_level 用以控制变化到指定基础脸型的程度。该参数的取值范围为[0, 1]。0为无效果，即关闭美型，1为指定脸型。
+
+若要关闭美型，可将 face_shape_level 设置为0。
+
+```C
+//  Set item parameters - shaping level
+[FURenderer itemSetParam:items[1] withName:@"face_shape_level" value:@(1.0)];
+```
+
+参数 eye_enlarging 用以控制眼睛大小。此参数受参数 face_shape_level 影响。该参数的推荐取值范围为[0, 1]。大于1为继续增强效果。
+
+```C
+//  Set item parameters - eye enlarging level
+[FURenderer itemSetParam:items[1] withName:@"eye_enlarging" value:@(1.0)];
+```
+
+参数 cheek_thinning 用以控制脸大小。此参数受参数 face_shape_level 影响。该参数的推荐取值范围为[0, 1]。大于1为继续增强效果。
+
+```C
+//  Set item parameters - cheek thinning level
+[FURenderer itemSetParam:items[1] withName:@"cheek_thinning" value:@(1.0)];
+```
+
+#### 平台相关
+
+PC端的美颜，使用前必须将参数 is_opengl_es 设置为 0，移动端无需此操作：
+
+```C
+//  Set item parameters
+fuItemSetParamd(g_items[1], "is_opengl_es", 0);
 ```
 
 ## 手势识别
 目前我们的手势识别功能也是以道具的形式进行加载的。一个手势识别的道具中包含了要识别的手势、识别到该手势时触发的动效、及控制脚本。加载该道具的过程和加载普通道具、美颜道具的方法一致。
 
-线上例子中 heart.bundle 为爱心手势演示道具。将其作为道具加载进行绘制即可启用手势识别功能。手势识别道具可以和普通道具及美颜共存，类似美颜将 g_items 扩展为三个并在最后加载手势道具即可。
+线上例子中 heart.bundle 为爱心手势演示道具。将其作为道具加载进行绘制即可启用手势识别功能。手势识别道具可以和普通道具及美颜共存，类似美颜将 items 扩展为三个并在最后加载手势道具即可。
 
 自定义手势道具的流程和2D道具制作一致，具体打包的细节可以联系我司技术支持。
 
@@ -197,6 +362,92 @@ typedef struct{
     CVPixelBufferRef pixelBuffer;
     GLuint bgraTextureHandle;
 }FUOutput;
+
+```
+##其他接口
+```C
+/**
+ 切换摄像头时调用
+ */
++ (void)onCameraChange;
+
+/**
+创建道具
+ */
++ (int)createItemFromPackage:(void*)data size:(int)size;
+
+/**
+销毁单个道具
+ */
++ (void)destroyItem:(int)item;
+
+/**
+销毁所有道具
+ */
++ (void)destroyAllItems;
+
+/**
+ 人脸信息跟踪
+ */
++ (int)trackFace:(int)inputFormat inputData:(void*)inputData width:(int)width height:(int)height;
+
+/**
+ 为道具设置参数
+ 
+ value 只支持 NSString NSNumber两种数据类型
+ 
+ */
++ (int)itemSetParam:(int)item withName:(NSString *)name value:(id)value;
+
+/**
+ 从道具中获取double值
+ */
++ (double)itemGetDoubleParam:(int)item withName:(NSString *)name;
+
+/**
+ 从道具中获取string值
+ */
++ (void)itemGetStringParam:(int)item withName:(NSString *)name buf:(char *)buf size:(int)size;
+
+/**
+ 判断是否识别到人脸，返回值为人脸个数
+ */
++ (int)isTracking;
+
+/**
+ 设置多人，最多设置8个
+ */
++ (int)setMaxFaces:(int)maxFaces;
+
+/**
+ 获取人脸信息
+ */
++ (int)getFaceInfo:(int)faceId name:(NSString *)name pret:(float *)pret number:(int)number;
+
+/**
+ 将普通道具绑定到avatar道具
+ */
++ (int)avatarBindItems:(int)avatarItem items:(int *)items itemsCount:(int)itemsCount contracts:(int *)contracts contractsCount:(int)contractsCount;
+
+/**
+ 将普通道具从avatar道具上解绑
+ */
++ (int)avatarUnbindItems:(int)avatarItem items:(int *)items itemsCount:(int)itemsCount;
+
+/**
+ 绑定道具
+ */
++ (int)bindItems:(int)item items:(int*)items itemsCount:(int)itemsCount;
+
+/**
+ 解绑道具
+ */
++ (int)unbindAllItems:(int)item;
+
+/**
+获取版本信息
+ */
++ (NSString *)getVersion;
 
 ```
 

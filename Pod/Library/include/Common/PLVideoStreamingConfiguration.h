@@ -76,12 +76,22 @@
 @property (nonatomic, assign) NSUInteger averageVideoBitRate;
 
 /*!
+    @property   videoEncoderType
+    @abstract   H.264 编码器类型
+ 
+    @discussion 默认采用 PLH264EncoderType_AVFoundation 编码方式，在 iOS 8 及以上的系统可采用 PLH264EncoderType_VideoToolbox。
+   
+    @since      v2.1.4
+ */
+@property (nonatomic, assign) PLH264EncoderType videoEncoderType;
+
+/*!
     @method     defaultConfiguration
     @abstract   生成一个默认的视频编码推流配置对象。
     
     @discussion 该方法每次都会生成一个新的配置，这不是单例方法。默认情况下，对应的参数为分辨率 (320, 480), video quality PLStreamingQualityMedium1
     
-    @see        configurationWithVideoSize:videoQuality:
+    @see        configurationWithVideoQuality:
     @see        initWithVideoSize:expectedSourceVideoFrameRate:videoMaxKeyframeInterval:averageVideoBitRate:videoProfileLevel:
  
     @since      v1.0.0
@@ -89,23 +99,48 @@
 + (instancetype)defaultConfiguration;
 
 /*!
-    @method     configurationWithVideoSize:videoQuality:
+    @method     configurationWithVideoQuality:
     @abstract   指定自定义分辨率和推流质量生成一个配置。
 
-    @param      videoSize 编码分辨率
     @param      quality 编码质量
  
     @discussion 该方法每次都会生成一个新的配置，这不是单例方法。
 
-    @see        configurationWithVideoSize:videoQuality:
     @see        initWithVideoSize:expectedSourceVideoFrameRate:videoMaxKeyframeInterval:averageVideoBitRate:videoProfileLevel:
 
     @since      v1.0.0
  */
-+ (instancetype)configurationWithVideoSize:(CGSize)videoSize
-                              videoQuality:(NSString *)quality;
++ (instancetype)configurationWithVideoQuality:(NSString *)quality;
 
 /*!
+     @method     initWithVideoSize:expectedSourceVideoFrameRate:videoMaxKeyframeInterval:averageVideoBitRate:videoProfileLevel:videoEncoderType:
+     @abstract   初始化一个 PLVideoStreamingConfiguration 对象。
+     
+     @param      videoSize 编码分辨率
+     @param      expectedSourceVideoFrameRate 预期采集源视频码率
+     @param      videoMaxKeyframeInterval 视频最大关键帧间隔
+     @param      averageVideoBitRate 平均视频码率
+     @param      videoProfileLevel H.264 编码时的 profile level
+     @param      videoEncoderType  H.264 编码所采用的编码器
+     
+     @warning    如果指定的参数不合理，在 -validate 时失败，会抛出异常。
+ 
+     @discussion 由于 VideoToolbox 编码只在 iOS 8 及以上系统版本支持，若 videoEncoderType 采用 PLH264EncoderType_VideoToolbox，在 iOS 8 以下的系统会自动回退采用 AVFoundation 编码。**若需使用 App Extension 推流，建议使用 PLH264EncoderType_AVFoundation 编码器，设备兼容性更高**。
+     
+     @see        defaultConfiguration
+     @see        configurationWithVideoSize:videoQuality:
+     
+     @since      v2.1.4
+ */
+- (instancetype)initWithVideoSize:(CGSize)videoSize
+     expectedSourceVideoFrameRate:(NSUInteger)expectedSourceVideoFrameRate
+         videoMaxKeyframeInterval:(NSUInteger)videoMaxKeyframeInterval
+              averageVideoBitRate:(NSUInteger)averageVideoBitRate
+                videoProfileLevel:(NSString *)videoProfileLevel
+                 videoEncoderType:(PLH264EncoderType)videoEncoderType NS_DESIGNATED_INITIALIZER;
+
+/*!
+    DEPRECATED: Use initWithVideoSize:expectedSourceVideoFrameRate:videoMaxKeyframeInterval:averageVideoBitRate:videoProfileLevel:videoEncoderType:
     @method     initWithVideoSize:expectedSourceVideoFrameRate:videoMaxKeyframeInterval:averageVideoBitRate:videoProfileLevel:
     @abstract   初始化一个 PLVideoStreamingConfiguration 对象。
 
@@ -126,8 +161,7 @@
      expectedSourceVideoFrameRate:(NSUInteger)expectedSourceVideoFrameRate
          videoMaxKeyframeInterval:(NSUInteger)videoMaxKeyframeInterval
               averageVideoBitRate:(NSUInteger)averageVideoBitRate
-                videoProfileLevel:(NSString *)videoProfileLevel;
-
+                videoProfileLevel:(NSString *)videoProfileLevel DEPRECATED_ATTRIBUTE;
 
 /*!
     @method     validate

@@ -33,6 +33,18 @@
  */
 @property (nonatomic, assign) UInt32    encodedNumberOfChannels;   // default as 1
 
+/**
+ @brief 编码模式，默认为 PLAACEncoderType_iOS_AAC
+ */
+@property (nonatomic, assign) PLAACEncoderType audioEncoderType;
+
+/**
+ @brief 输入的音频流描述，默认为单路音频 @[kPLAudioChannelDefault]
+ 
+ @discussion 目前提供两路音频流混音功能，对于ReplayKit录屏推流，若要实现 App Audio 与 Mic Audio 的混音，需设置该属性为 @[kPLAudioChannelApp, kPLAudioChannelMic]
+ */
+@property (nonatomic, copy) NSArray   *inputAudioChannelDescriptions;
+
 /// kPLAudioStreamingQualityHigh2 as default
 + (instancetype)defaultConfiguration;
 
@@ -53,5 +65,16 @@
 - (instancetype)initWithEncodedAudioSampleRate:(PLStreamingAudioSampleRate)sampleRate
                        encodedNumberOfChannels:(UInt32)numberOfChannels
                                   audioBitRate:(PLStreamingAudioBitRate)audioBitRate;
+
+- (instancetype)initWithEncodedAudioSampleRate:(PLStreamingAudioSampleRate)sampleRate
+                       encodedNumberOfChannels:(UInt32)numberOfChannels
+                                  audioBitRate:(PLStreamingAudioBitRate)audioBitRate
+                 inputAudioChannelDescriptions:(NSArray *)inputAudioChannelDescriptions;
+
+- (instancetype)initWithEncodedAudioSampleRate:(PLStreamingAudioSampleRate)sampleRate
+                       encodedNumberOfChannels:(UInt32)numberOfChannels
+                              audioEncoderType:(PLAACEncoderType)audioEncoderType
+                                  audioBitRate:(PLStreamingAudioBitRate)audioBitRate
+                 inputAudioChannelDescriptions:(NSArray *)inputAudioChannelDescriptions;
 
 @end

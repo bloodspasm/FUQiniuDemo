@@ -12,6 +12,7 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 
+
 #pragma mark - Stream State
 
 
@@ -61,6 +62,19 @@ typedef NS_ENUM(NSUInteger, PLNetworkStateTransition) {
 };
 
 /*!
+ @typedef    PLStreamAdaptiveQualityMode
+ @abstract   自适应流质量调整模式
+ */
+typedef NS_ENUM(NSUInteger, PLStreamAdaptiveQualityMode) {
+    /// PLStreamAdaptiveQualityModeBitratePriorAdjust  优先调整码率
+    PLStreamAdaptiveQualityModeBitratePriorAdjust,
+    /// PLStreamAdaptiveQualityModeFrameratePriorAdjust 优先调整帧率
+    PLStreamAdaptiveQualityModeFrameratePriorAdjust,
+    /// PLStreamAdaptiveQualityModeHybridAdjust 混合调整
+    PLStreamAdaptiveQualityModeHybridAdjust,
+};
+
+/*!
  @typedef    PLStreamStartState
  @abstract   反馈推流操作开始的状态。
  @since      v2.0.0
@@ -75,7 +89,9 @@ typedef NS_ENUM(NSUInteger, PLStreamStartStateFeedback) {
     /// PLStreamStartStateStreamURLUnauthorized session 当前的 StreamURL 没有被授权
     PLStreamStartStateStreamURLUnauthorized,
     /// PLStreamStartStateSessionConnectStreamError session 建立 socket 连接错误
-    PLStreamStartStateSessionConnectStreamError
+    PLStreamStartStateSessionConnectStreamError,
+    /// PLStreamStartStateSessionURLInvalid session 当前传入的 pushURL 无效
+    PLStreamStartStateSessionPushURLInvalid
 };
 
 #pragma mark - Log
@@ -170,15 +186,20 @@ typedef enum {
      */
     PLCameraErroTryReconnectFailed = -1501,
     
-    PLRTCStreamingErrorUnknown = -1,
-    PLRTCStreamingErrorInitEngineFailed = -3000,
-    PLRTCStreamingErrorRoomAuthFailed = -3001,
-    PLRTCStreamingErrorJoinRoomFailed = -3002,
-    PLRTCStreamingErrorOpenMicrophoneFailed = -3003,
-    PLRTCStreamingErrorSubscribeFailed = -3004,
-    PLRTCStreamingErrorPublishCameraFailed = -3005,
-    PLRTCStreamingErrorConnectRoomFailed = -3006,
-    PLRTCStreamingErrorSetVideoBitrateFailed = -3007
+    PLRTCStreamingErrorUnknown = -3000,
+    PLRTCStreamingErrorStillRunning = -3001,
+    PLRTCStreamingErrorInvalidParameter = -3002,
+    PLRTCStreamingErrorInitEngineFailed = -3003,
+    PLRTCStreamingErrorRoomAuthFailed = -3004,
+    PLRTCStreamingErrorJoinRoomFailed = -3005,
+    PLRTCStreamingErrorOpenMicrophoneFailed = -3006,
+    PLRTCStreamingErrorSubscribeFailed = -3007,
+    PLRTCStreamingErrorPublishCameraFailed = -3008,
+    PLRTCStreamingErrorConnectRoomFailed = -3009,
+    PLRTCStreamingErrorSetVideoBitrateFailed = -3010,
+    PLRTCStreamingErrorSystemVersionNotSupported = -3011,
+    PLRTCStreamingErrorRTCLibraryNotFound = -3012,
+    PLRTCStreamingErrorUnsubscribeFailed = -3013
 } PLStreamError;
 
 #pragma mark - Video Streaming Quality
@@ -187,7 +208,7 @@ typedef enum {
     @constant   kPLVideoStreamingQualityLow1
     @abstract   视频编码推流质量 low 1。
 
-    @discussion 具体参数 fps: 12, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 150Kbps。
+    @discussion 具体参数 videoSize: 272x480, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264BaselineAutoLevel, video bitrate: 128Kbps。
  
     @since      v1.0.0
  */
@@ -197,7 +218,7 @@ extern NSString *kPLVideoStreamingQualityLow1;
     @constant   kPLVideoStreamingQualityLow1
     @abstract   视频编码推流质量 low 2。
 
-    @discussion 具体参数 fps: 15, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 264Kbps。
+    @discussion 具体参数 videoSize: 272x480, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264BaselineAutoLevel, video bitrate: 256Kbps。
  
     @since      v1.0.0
  */
@@ -207,7 +228,7 @@ extern NSString *kPLVideoStreamingQualityLow2;
     @constant   kPLVideoStreamingQualityLow3
     @abstract   视频编码推流质量 low 3。
 
-    @discussion 具体参数 fps: 15, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 350Kbps。
+    @discussion 具体参数 videoSize: 272x480, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264HighAutoLevel, video bitrate: 512Kbps
  
     @since      v1.0.0
  */
@@ -217,7 +238,7 @@ extern NSString *kPLVideoStreamingQualityLow3;
     @constant   kPLVideoStreamingQualityMedium1
     @abstract   视频编码推流质量 medium 1。
  
-    @discussion 具体参数 fps: 30, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 512Kbps。
+    @discussion 具体参数 videoSize: 368x640, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264HighAutoLevel, video bitrate: 512Kbps
  
     @since      v1.0.0
  */
@@ -227,7 +248,7 @@ extern NSString *kPLVideoStreamingQualityMedium1;
     @constant   kPLVideoStreamingQualityMedium2
     @abstract   视频编码推流质量 medium 2。
 
-    @discussion 具体参数 fps: 30, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 800Kbps。
+    @discussion 具体参数 videoSize: 368x640, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264BaselineAutoLevel, video bitrate: 768Kbps
  
     @since      v1.0.0
  */
@@ -237,7 +258,7 @@ extern NSString *kPLVideoStreamingQualityMedium2;
     @constant   kPLVideoStreamingQualityMedium3
     @abstract   视频编码推流质量 medium 3。
 
-    @discussion 具体参数 fps: 30, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 1000Kbps。
+ @discussion 具体参数 videoSize: 368x640, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264BaselineAutoLevel, video bitrate: 1Mbps
  
     @since      v1.0.0
  */
@@ -247,7 +268,7 @@ extern NSString *kPLVideoStreamingQualityMedium3;
     @constant   kPLVideoStreamingQualityHigh1
     @abstract   视频编码推流质量 high 1。
 
-    @discussion 具体参数 fps: 30, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 1200Kbps。
+ @discussion 具体参数 videoSize: 720x1280, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264BaselineAutoLevel, video bitrate: 1Mbps
  
     @since      v1.0.0
  */
@@ -257,7 +278,7 @@ extern NSString *kPLVideoStreamingQualityHigh1;
     @constant   kPLVideoStreamingQualityHigh2
     @abstract   视频编码推流质量 high 2。
 
-    @discussion 具体参数 fps: 30, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 1500Kbps。
+ @discussion 具体参数 videoSize: 720x1280, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264BaselineAutoLevel, video bitrate: 1.25Mbps
  
     @since      v1.0.0
  */
@@ -267,7 +288,7 @@ extern NSString *kPLVideoStreamingQualityHigh2;
     @constant   kPLVideoStreamingQualityHigh3
     @abstract   视频编码推流质量 high 3。
 
-    @discussion 具体参数 fps: 30, profile level: AVVideoProfileLevelH264Baseline31, video bitrate: 2000Kbps。
+ @discussion 具体参数 videoSize: 720x1280, expectedSourceVideoFrameRate: 24, videoMaxKeyframeInterval: 72, profile level: AVVideoProfileLevelH264BaselineAutoLevel, video bitrate: 1.5Mbps
  
     @since      v1.0.0
  */
@@ -314,6 +335,37 @@ extern NSString *PLCameraDidStartRunningNotificaiton;
 extern NSString *PLMicrophoneDidStartRunningNotificaiton;
 extern NSString *PLAudioComponentFailedToCreateNotification;
 
+/*!
+ @typedef    PLH264EncoderType
+ @abstract   H.264 编码器类型
+ 
+ @constant   PLH264EncoderType_AVFoundation  采用 AVFoundation 进行编码
+ @constant   PLH264EncoderType_VideoToolbox  采用 VideoToolbox 进行编码，只在 iOS 8 及以上支持，iOS 8 以下系统版本会自动回退为 PLH264EncoderType_AVFoundation 编码器
+ */
+typedef NS_ENUM(NSUInteger, PLH264EncoderType) {
+    PLH264EncoderType_AVFoundation,    // AVFoundation 编码器
+    PLH264EncoderType_VideoToolbox     // iOS 8 及以上系统版本可用 VideoToolbox 编码器，编码效率更优
+};
+
+/**
+ @brief 音频编码模式
+ */
+typedef NS_ENUM(NSUInteger, PLAACEncoderType) {
+    /**
+     @brief iOS AAC（硬编）
+     */
+    PLAACEncoderType_iOS_AAC,
+    /**
+     @brief fdk-aac AAC
+     */
+    PLAACEncoderType_fdk_AAC_LC,
+    /**
+     @brief fdk-aac HE-AAC
+     */
+    PLAACEncoderType_fdk_AAC__HE_BSR
+    
+};
+
 #pragma mark - Audio SampleRate
 
 /*!
@@ -352,6 +404,46 @@ typedef enum {
     PLStreamingAudioBitRate_128Kbps = 128000,
 } PLStreamingAudioBitRate;
 
+/*!
+ @typedef    PLAudioStreamEndian
+ @abstract   PLAudioStreamEndian 音频流如何处理大小端。
+ @since      @v1.2.5
+ */
+typedef NS_ENUM(NSUInteger, PLAudioStreamEndian) {
+    /// PLAudioStreamEndian_Auto 根据 CMSampleBufferRef 的描述决定该以大端还是小端来处理
+    PLAudioStreamEndian_Auto = 0,
+    /// PLAudioStreamEndian_BigEndian 显式声明音频流为大端
+    PLAudioStreamEndian_BigEndian = 1,
+    /// PLAudioStreamEndian_LittleEndian 显式声明音频流为小端
+    PLAudioStreamEndian_LittleEndian = 2
+};
+
+#pragma mark - Audio Channel
+
+/*!
+ @constant   kPLAudioChannelDefault
+ @abstract   默认音频输入流
+ 
+ @since      v1.2.5
+ */
+extern const NSString *kPLAudioChannelDefault;
+
+/*!
+ @constant   kPLAudioChannelApp
+ @abstract   来自ReplayKit Live的Audio App音频流
+ 
+ @since      v1.2.5
+ */
+extern const NSString *kPLAudioChannelApp;
+
+/*!
+ @constant   kPLAudioChannelMic
+ @abstract   来自ReplayKit Live的Audio Mic音频流
+ 
+ @since      v1.2.5
+ */
+extern const NSString *kPLAudioChannelMic;
+
 #pragma mark - RTC Video Size
 
 /*!
@@ -359,16 +451,30 @@ typedef enum {
  @abstract   定义连麦时的视频大小。
  */
 typedef NS_ENUM(NSUInteger, PLRTCVideoSizePreset) {
-    PLRTCVideoSizePresetUnknown = 0,
-    PLRTCVideoSizePreset180x320 = 1,    //16:9
+    PLRTCVideoSizePresetDefault = 0,
+    PLRTCVideoSizePreset176x320 = 1,    //16:9
     PLRTCVideoSizePreset240x320,        //4:3
-    PLRTCVideoSizePreset240x424,        //16:9
-    PLRTCVideoSizePreset384x640,        //16:9
+    PLRTCVideoSizePreset240x432,        //16:9
+    PLRTCVideoSizePreset352x640,        //16:9
     PLRTCVideoSizePreset480x640,        //4:3
-    PLRTCVideoSizePreset540x720,        //4:3
-    PLRTCVideoSizePreset540x960,        //16:9
+    PLRTCVideoSizePreset544x720,        //4:3
+    PLRTCVideoSizePreset544x960,        //16:9
     PLRTCVideoSizePreset720x960,        //4:3
-    PLRTCVideoSizePreset720x1280        //16:9
+    PLRTCVideoSizePreset720x1280,       //16:9
+    PLRTCVideoSizePreset144x192         //4:3
+};
+
+///连麦类型
+typedef NS_OPTIONS(NSUInteger, PLRTCConferenceType) {
+    PLRTCConferenceTypeAudio = 0,
+    PLRTCConferenceTypeVideo,
+    PLRTCConferenceTypeAudioAndVideo
+};
+
+///连麦视频格式
+typedef NS_OPTIONS(NSUInteger, PLRTCVideoFormat) {
+    PLRTCVideoFormatNV12 = 0,
+    PLRTCVideoFormatI420 = 1
 };
 
 /// 断线后是否自动重新加入房间，默认为 YES
@@ -384,8 +490,6 @@ extern const NSString *kPLRTCConnetTimeoutKey;
 typedef NS_ENUM(NSUInteger, PLRTCState) {
     /// 未知状态，只会作为 init 时的初始状态
     PLRTCStateUnknown = 0,
-    /// 已加入房间的状态
-    PLRTCStateConnected,
     /// 已进入到连麦的状态
     PLRTCStateConferenceStarted,
     /// 连麦已结束的状态
@@ -421,6 +525,10 @@ typedef enum {
     PLVideoFillModePreserveAspectRatioAndFill
 } PLVideoFillModeType;
 
+typedef BOOL(^ConnectionChangeActionCallback)(PLNetworkStateTransition transition);
+
+typedef BOOL(^ConnectionInterruptionHandler)(NSError *error);
+
 typedef enum {
     /**
      @brief 由 PLCameraStreamingKit 提供的预设的音效配置
@@ -448,4 +556,19 @@ typedef void (^PLAudioEffectCustomConfigurationBlock)(void *inRefCon,
                                                       UInt32 inNumberFrames,
                                                       AudioBufferList *ioData);
 
+
+typedef void (^PLAudioSessionDidBeginInterruptionCallback)();
+
+typedef void (^PLAudioSessionDidEndInterruptionCallback)();
+
+/**
+ @brief 对截图数据进行处理的回调
+ 
+ @since v2.2.0
+ */
+
+typedef void (^PLStreamScreenshotHandler)(UIImage * _Nullable image);
+
 #endif
+
+
